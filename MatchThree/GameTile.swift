@@ -24,6 +24,8 @@ enum GameTileProperty
 	case None
 	case Clockwise
 	case Counterclockwise
+	case Empty
+	case Junky
 }
 
 struct GameTile
@@ -53,9 +55,13 @@ struct GameTile
 		self.identifier = identifier
 	}
 	
-	var canSelect:Bool
+	var canMatch:Bool
 	{
 		return self.color != .Black
+	}
+	var canSelect:Bool
+	{
+		return true
 	}
 }
 

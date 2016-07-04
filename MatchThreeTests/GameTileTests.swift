@@ -17,11 +17,11 @@ class GameTileTests: XCTestCase {
 		XCTAssertFalse(GameTile(color: GameTileColor.Red, property: GameTileProperty.Clockwise) == GameTile(color: GameTileColor.Red))
 	}
 	
-	func testCanSelect()
+	func testCanMatch()
 	{
 		let red = GameTile(color: .Red)
-		XCTAssertTrue(red.canSelect)
+		XCTAssertTrue(red.canMatch)
 		let black = GameTile(color: .Black)
-		XCTAssertFalse(black.canSelect)
+		XCTAssertFalse(black.canMatch)
 	}
 }

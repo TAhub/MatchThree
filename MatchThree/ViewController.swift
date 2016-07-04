@@ -341,27 +341,35 @@ class ViewController: UIViewController {
 		return gameView.frame.width / CGFloat(board.size)
 	}
 	
+	private func updateTileColor(tileView:UIView, tile:GameTile)
+	{
+		switch(tile.color)
+		{
+		case .Red: tileView.backgroundColor = UIColor.redColor()
+		case .Blue: tileView.backgroundColor = UIColor.blueColor()
+		case .Yellow: tileView.backgroundColor = UIColor.yellowColor()
+		case .Green: tileView.backgroundColor = UIColor.greenColor()
+		case .Gray: tileView.backgroundColor = UIColor.darkGrayColor()
+		case .Purple: tileView.backgroundColor = UIColor.purpleColor()
+		case .Black: tileView.backgroundColor = UIColor.blackColor()
+		}
+		
+		//TODO: also give the tile an icon if necessary (IE an image, like a rotate icon or w/e)
+	}
+	
 	private func getViewForTile(x x:Int, y: Int) -> UIView
 	{
 		if let tile = board.tileAt(x: x, y: y)
 		{
 			if let rep = tileRepresentations[tile.identifier]
 			{
+				updateTileColor(rep, tile: tile)
 				return rep
 			}
 			
 			
 			let tileView = UIView(frame: CGRectMake(CGFloat(x) * tileSize, CGFloat(y) * tileSize, tileSize, tileSize))
-			switch(tile.color)
-			{
-			case .Red: tileView.backgroundColor = UIColor.redColor()
-			case .Blue: tileView.backgroundColor = UIColor.blueColor()
-			case .Yellow: tileView.backgroundColor = UIColor.yellowColor()
-			case .Green: tileView.backgroundColor = UIColor.greenColor()
-			case .Gray: tileView.backgroundColor = UIColor.darkGrayColor()
-			case .Purple: tileView.backgroundColor = UIColor.purpleColor()
-			case .Black: tileView.backgroundColor = UIColor.blackColor()
-			}
+			updateTileColor(tileView, tile: tile)
 			
 			//add the tile representation and register it with the representations dictionary
 			gameView.addSubview(tileView)

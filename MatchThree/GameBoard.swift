@@ -11,6 +11,7 @@ import Foundation
 //MARK: constants
 let minMatchSize = 3
 let startGenMatchFixes = 30
+let junkyChance:UInt32 = 6
 
 //MARK: match definition
 struct Match
@@ -176,26 +177,56 @@ class GameBoard
 		//raise score based on the match size
 		score += match.points
 		
-		//move everything above the bottom of the match tiles down (match.height) tiles
+		//convert all of the tiles in the match into empty, tallying special bonuses as you go
 		for x in match.x..<match.x+match.width
 		{
-			//look at the y values in reverse order so that the operation can be done in place
-			for y in (0..<match.y+match.height).reverse()
+			for y in match.y..<match.y+match.height
 			{
-				let comparisonY = y - match.height
-				let tileFrom:GameTile
-				if comparisonY < 0
+				let tile = board[toI(x: x, y: y)]
+				if tile.property == .Junky
 				{
-					tileFrom = generateTile()
+					//junky tiles are turned into black tiles, instead of going away and leaving air
+					board[toI(x: x, y: y)] = GameTile(color: .Black, property: .None, identifier: tile.identifier)
 				}
 				else
 				{
-					tileFrom = board[toI(x: x, y: comparisonY)]
+					board[toI(x: x, y: y)] = GameTile(color: .Black, property: .Empty)
 				}
-				
-				board[toI(x: x, y: y)] = tileFrom
 			}
 		}
+		
+		//make all existing tiles fall down
+		for x in match.x..<match.x+match.width
+		{
+			for y in (0..<match.y + match.height).reverse()
+			{
+				let tile = board[toI(x: x, y: y)]
+				var yOn = y + 1
+				if tile.property != .Empty
+				{
+					//move this one down until it hits something
+					while yOn < size && board[toI(x: x, y: yOn)].property == GameTileProperty.Empty
+					{
+						board[toI(x: x, y: yOn - 1)] = GameTile(color: .Black, property: .Empty)
+						board[toI(x: x, y: yOn)] = tile
+						yOn += 1
+					}
+				}
+			}
+		}
+		
+		//fill in all empty tiles with new tiles
+		for y in 0..<size
+		{
+			for x in 0..<size
+			{
+				if board[toI(x: x, y: y)].property == GameTileProperty.Empty
+				{
+					board[toI(x: x, y: y)] = generateTile()
+				}
+			}
+		}
+		
 		markTiles()
 	}
 	
@@ -228,7 +259,7 @@ class GameBoard
 						let oTile = board[toI(x: oX, y: oY)]
 						
 						//check to see if you can discard this move for any trivial reason
-						if tile.color != oTile.color || !tile.canSelect || !oTile.canSelect
+						if tile.color != oTile.color || !tile.canSelect || !oTile.canSelect || !tile.canMatch
 						{
 							//experimentally try the move
 							board[toI(x: x, y: y)] = oTile
@@ -266,7 +297,17 @@ class GameBoard
 			let tile = board[i]
 			if tile.identifier == -1
 			{
-				board[i] = GameTile(color: tile.color, property: tile.property, identifier: identifierOn)
+				//give the tile a property, if it didn't have one before
+				var property = tile.property
+				if property == .None && generationMethod == .Random
+				{
+					if arc4random_uniform(100) < junkyChance
+					{
+						property = .Junky
+					}
+				}
+				
+				board[i] = GameTile(color: tile.color, property: property, identifier: identifierOn)
 				identifierOn += 1
 			}
 		}
@@ -340,7 +381,7 @@ class GameBoard
 			for x in 0..<size
 			{
 				let tile = board[toI(x: x, y: y)]
-				if tile.canSelect
+				if tile.canMatch
 				{
 					var matchWidth = 0
 					var matchHeight = 0

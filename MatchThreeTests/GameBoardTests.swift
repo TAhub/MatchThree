@@ -112,16 +112,16 @@ class GameBoardTests: XCTestCase {
 		XCTAssertFalse(gameBoard.matchExists)
 	}
 	
-	func testNoSwapBlack()
-	{
-		let comparisonBoard = [black, red, black,
-		                       blue, black, blue,
-		                       green, green, yellow]
-		
-		gameBoard.setBoard(comparisonBoard)
-		
-		XCTAssertFalse(gameBoard.swap(xFrom: 1, yFrom: 1, xTo: 1, yTo: 0))
-	}
+//	func testNoSwapBlack() //I changed my mind; you should be allowed to swap black tiles
+//	{
+//		let comparisonBoard = [black, red, black,
+//		                       blue, black, blue,
+//		                       green, green, yellow]
+//		
+//		gameBoard.setBoard(comparisonBoard)
+//		
+//		XCTAssertFalse(gameBoard.swap(xFrom: 1, yFrom: 1, xTo: 1, yTo: 0))
+//	}
 
 	func testRotate()
 	{
@@ -264,7 +264,40 @@ class GameBoardTests: XCTestCase {
 		XCTAssertFalse(startingMatch)
 	}
 	
+	func testJunkyTiles()
+	{
+		//junky tiles should turn into black tiles when collapsed
+		//they should be a percentage of the tiles, so just keep collapsing the entire board until you get a black tile to make sure it works
+		var foundBlack = false
+		for _ in 0..<20
+		{
+			gameBoard = GameBoard(size: 10, generationMethod: .Random)
+			gameBoard.collapseMatch(Match(x: 0, y: 0, width: 10, height: 10))
+			for y in 0..<10
+			{
+				for x in 0..<10
+				{
+					if gameBoard.tileAt(x: x, y: y)?.color ?? .Red == .Black
+					{
+						foundBlack = true
+						break
+					}
+				}
+				if foundBlack
+				{
+					break
+				}
+			}
+			if foundBlack
+			{
+				break
+			}
+		}
+		XCTAssertTrue(foundBlack)
+	}
+	
 	//MARK: helper functions
+	
 	func compareAgainst(compareArray:[GameTile]) -> Bool
 	{
 		for y in 0..<gameBoard.size
