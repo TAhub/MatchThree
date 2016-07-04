@@ -8,16 +8,25 @@
 
 import UIKit
 
-let swapTime = 0.5
+let swapTime = 0.25
 let dropTimePerLevel = 0.1
 let zapTime = 0.35
+let playTime = 60
 
 class ViewController: UIViewController {
 
 	@IBOutlet weak var gameView: UIView!
-	private var board:GameBoard = GameBoard(size: 7, generationMethod: GameBoardGenerationMethod.Random)
+	private var board:GameBoard = GameBoard(size: 6, generationMethod: GameBoardGenerationMethod.Random)
 	private var tileRepresentations = [Int:UIView]()
 	private var deadTileRepresentations = [UIView]()
+	
+	@IBOutlet weak var scoreCounter: UILabel!
+	@IBOutlet weak var movesCounter: UILabel!
+	@IBOutlet weak var timeCounter: UILabel!
+	
+	private var clockTimer:NSTimer!
+	private var secondsLeft = playTime
+	
 	
 	private var selectX:Int?
 	private var selectY:Int!
@@ -38,11 +47,33 @@ class ViewController: UIViewController {
 				getViewForTile(x: x, y: y)
 			}
 		}
+		
+		clockTimer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: #selector(timerTick), userInfo: nil, repeats: true)
+		secondsLeft += 1
+		timerTick(clockTimer)
+	}
+	
+	func timerTick(sender:NSTimer)
+	{
+		secondsLeft -= 1
+		
+		timeCounter.text = "\(secondsLeft)"
+		
+		if secondsLeft == 0
+		{
+			//stop the timer
+			clockTimer.invalidate()
+			
+			if !animating
+			{
+				gameOver()
+			}
+		}
 	}
 	
 	func selectTile(sender:UITapGestureRecognizer)
 	{
-		if animating
+		if animating || secondsLeft == 0
 		{
 			return
 		}
@@ -61,9 +92,17 @@ class ViewController: UIViewController {
 			{
 				if (board.swap(xFrom: selectX, yFrom: selectY, xTo: senderX, yTo: senderY))
 				{
+					//temporarily move the select pointer to the click location to properly disable the selection box
+					self.selectX = senderX
+					self.selectY = senderY
 					destroySelectionBox()
+					
+					//mark the animation as started
 					self.selectX = nil
 					self.animating = true
+					
+					//update moves
+					self.movesCounter.text = "\(self.board.moves)"
 					
 					//animate the swap
 					UIView.animateWithDuration(swapTime, animations:
@@ -109,6 +148,9 @@ class ViewController: UIViewController {
 			//collapse the match
 			self.board.collapseMatch(match)
 			
+			//update score
+			self.scoreCounter.text = "\(self.board.score)"
+			
 			//fade away the old tiles
 			self.findDeadTileRepresentations()
 			UIView.animateWithDuration(zapTime, animations:
@@ -138,7 +180,26 @@ class ViewController: UIViewController {
 		else
 		{
 			self.animating = false
+			
+			//TODO: test to see if there are no moves at all
+			//if so, re-make the board
+			
+			if secondsLeft == 0
+			{
+				gameOver()
+			}
 		}
+	}
+	
+	private func gameOver()
+	{
+		if let _ = selectX
+		{
+			destroySelectionBox()
+		}
+		
+		//TODO: end the game
+		print("GAME OVER")
 	}
 	
 	private func findDeadTileRepresentations()

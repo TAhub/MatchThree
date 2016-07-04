@@ -44,6 +44,8 @@ enum GameBoardGenerationMethod
 
 class GameBoard
 {
+	var score:Int = 0
+	var moves:Int = 0
 	let size:Int
 	private var board:[GameTile]!
 	private let generationMethod:GameBoardGenerationMethod
@@ -152,6 +154,7 @@ class GameBoard
 		if matchExists
 		{
 			//the swap was a good one, so it can happen
+			self.moves += 1
 			return true
 		}
 		
@@ -163,6 +166,9 @@ class GameBoard
 	
 	func collapseMatch(match:Match)
 	{
+		//raise score based on the match size
+		score += match.points
+		
 		//move everything above the bottom of the match tiles down (match.height) tiles
 		for x in match.x..<match.x+match.width
 		{

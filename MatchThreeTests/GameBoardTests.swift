@@ -81,18 +81,23 @@ class GameBoardTests: XCTestCase {
 		                               yellow, yellow, blue,
 		                               green, blue, red]
 		
+		XCTAssertEqual(gameBoard.moves, 0)
+		
 		//you aren't allowed to swap non-adjacent tiles, even if it would be a good move
 		gameBoard.setBoard(comparisonBoard)
 		XCTAssertFalse(gameBoard.swap(xFrom: 2, yFrom: 2, xTo: 1, yTo: 0))
+		XCTAssertEqual(gameBoard.moves, 0)
 		
 		//you aren't allowed to swap if it wouldn't create a match
 		gameBoard.setBoard(comparisonBoard)
 		XCTAssertFalse(gameBoard.swap(xFrom: 1, yFrom: 1, xTo: 1, yTo: 2))
+		XCTAssertEqual(gameBoard.moves, 0)
 		
 		//otherwise, the swap works
 		gameBoard.setBoard(comparisonBoard)
 		XCTAssertTrue(gameBoard.swap(xFrom: 1, yFrom: 1, xTo: 1, yTo: 0))
 		XCTAssertTrue(compareAgainst(comparisonBoardPostSwap))
+		XCTAssertEqual(gameBoard.moves, 1)
 	}
 
 	func testRotate()
@@ -135,6 +140,7 @@ class GameBoardTests: XCTestCase {
 	
 	func testCollapseMatch()
 	{
+		XCTAssertEqual(gameBoard.score, 0)
 		let comparisonBoard = [red, yellow, red, yellow, blue, yellow, green, green, green]
 		let comparisonBoardCollapsed = [red, red, red, red, yellow, red, yellow, blue, yellow]
 		gameBoard.setBoard(comparisonBoard)
@@ -145,6 +151,7 @@ class GameBoardTests: XCTestCase {
 			gameBoard.collapseMatch(match)
 			XCTAssertTrue(compareAgainst(comparisonBoardCollapsed))
 			XCTAssertTrue(allTilesMarked())
+			XCTAssertEqual(gameBoard.score, 3)
 		}
 	}
 	
