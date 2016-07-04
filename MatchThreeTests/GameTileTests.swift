@@ -16,4 +16,12 @@ class GameTileTests: XCTestCase {
 		XCTAssertFalse(GameTile(color: GameTileColor.Blue) == GameTile(color: GameTileColor.Red))
 		XCTAssertFalse(GameTile(color: GameTileColor.Red, property: GameTileProperty.Clockwise) == GameTile(color: GameTileColor.Red))
 	}
+	
+	func testCanSelect()
+	{
+		let red = GameTile(color: .Red)
+		XCTAssertTrue(red.canSelect)
+		let black = GameTile(color: .Black)
+		XCTAssertFalse(black.canSelect)
+	}
 }

@@ -25,6 +25,7 @@ class GameBoardTests: XCTestCase {
 	let blue = GameTile(color: GameTileColor.Blue)
 	let green = GameTile(color: GameTileColor.Green)
 	let yellow = GameTile(color: GameTileColor.Yellow)
+	let black = GameTile(color: GameTileColor.Black)
 	
 	//MARK: tests
 	
@@ -98,6 +99,28 @@ class GameBoardTests: XCTestCase {
 		XCTAssertTrue(gameBoard.swap(xFrom: 1, yFrom: 1, xTo: 1, yTo: 0))
 		XCTAssertTrue(compareAgainst(comparisonBoardPostSwap))
 		XCTAssertEqual(gameBoard.moves, 1)
+	}
+	
+	func testNoMatchBlack()
+	{
+		let comparisonBoard = [black, black, black,
+		                       blue, black, blue,
+		                       green, green, yellow]
+		
+		gameBoard.setBoard(comparisonBoard)
+		
+		XCTAssertFalse(gameBoard.matchExists)
+	}
+	
+	func testNoSwapBlack()
+	{
+		let comparisonBoard = [black, red, black,
+		                       blue, black, blue,
+		                       green, green, yellow]
+		
+		gameBoard.setBoard(comparisonBoard)
+		
+		XCTAssertFalse(gameBoard.swap(xFrom: 1, yFrom: 1, xTo: 1, yTo: 0))
 	}
 
 	func testRotate()

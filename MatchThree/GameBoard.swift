@@ -145,9 +145,16 @@ class GameBoard
 			return false
 		}
 		
-		//experimentally swap the two tiles
 		let fromTile = board[toI(x: xFrom, y: yFrom)]
 		let toTile = board[toI(x: xTo, y: yTo)]
+		
+		//can't swap black tiles
+		if (!fromTile.canSelect || !toTile.canSelect)
+		{
+			return false
+		}
+		
+		//experimentally swap the two tiles
 		board[toI(x: xFrom, y: yFrom)] = toTile
 		board[toI(x: xTo, y: yTo)] = fromTile
 		
@@ -221,7 +228,7 @@ class GameBoard
 						let oTile = board[toI(x: oX, y: oY)]
 						
 						//check to see if you can discard this move for any trivial reason
-						if tile.color != oTile.color
+						if tile.color != oTile.color || !tile.canSelect || !oTile.canSelect
 						{
 							//experimentally try the move
 							board[toI(x: x, y: y)] = oTile
@@ -308,12 +315,13 @@ class GameBoard
 		case .AllRed: color = .Red
 		case .AllBlue: color = .Blue
 		default:
-			switch(arc4random_uniform(5))
+			switch(arc4random_uniform(6))
 			{
 			case 0: color = .Red
 			case 1: color = .Blue
 			case 2: color = .Green
-			case 3: color = .Black
+			case 3: color = .Gray
+			case 4: color = .Purple
 			default: color = .Yellow
 			}
 		}
@@ -332,44 +340,47 @@ class GameBoard
 			for x in 0..<size
 			{
 				let tile = board[toI(x: x, y: y)]
-				var matchWidth = 0
-				var matchHeight = 0
-				for x2 in x..<size
+				if tile.canSelect
 				{
-					let oTile = board[toI(x: x2, y: y)]
-					if oTile.color == tile.color
+					var matchWidth = 0
+					var matchHeight = 0
+					for x2 in x..<size
 					{
-						matchWidth += 1
+						let oTile = board[toI(x: x2, y: y)]
+						if oTile.color == tile.color
+						{
+							matchWidth += 1
+						}
+						else
+						{
+							break
+						}
 					}
-					else
+					for y2 in y..<size
 					{
-						break
+						let oTile = board[toI(x: x, y: y2)]
+						if oTile.color == tile.color
+						{
+							matchHeight += 1
+						}
+						else
+						{
+							break
+						}
 					}
-				}
-				for y2 in y..<size
-				{
-					let oTile = board[toI(x: x, y: y2)]
-					if oTile.color == tile.color
+					
+					if matchWidth > matchHeight && matchWidth >= minMatchSize
 					{
-						matchHeight += 1
+						matches.append(Match(x: x, y: y, width: matchWidth, height: 1))
 					}
-					else
+					else if matchHeight >= minMatchSize
 					{
-						break
+						matches.append(Match(x: x, y: y, width: 1, height: matchHeight))
 					}
-				}
-				
-				if matchWidth > matchHeight && matchWidth >= minMatchSize
-				{
-					matches.append(Match(x: x, y: y, width: matchWidth, height: 1))
-				}
-				else if matchHeight >= minMatchSize
-				{
-					matches.append(Match(x: x, y: y, width: 1, height: matchHeight))
-				}
-				if firstMatch && matches.count > 0
-				{
-					return matches.first
+					if firstMatch && matches.count > 0
+					{
+						return matches.first
+					}
 				}
 			}
 		}

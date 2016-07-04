@@ -14,6 +14,8 @@ enum GameTileColor
 	case Blue
 	case Green
 	case Yellow
+	case Gray
+	case Purple
 	case Black
 }
 
@@ -49,6 +51,11 @@ struct GameTile
 		self.color = color
 		self.property = property
 		self.identifier = identifier
+	}
+	
+	var canSelect:Bool
+	{
+		return self.color != .Black
 	}
 }
 

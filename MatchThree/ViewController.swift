@@ -115,11 +115,14 @@ class ViewController: UIViewController {
 				}
 			}
 		}
-		else
+		else if let tileAt = board.tileAt(x: senderX, y: senderY)
 		{
-			selectX = senderX
-			selectY = senderY
-			makeSelectionBox()
+			if tileAt.canSelect
+			{
+				selectX = senderX
+				selectY = senderY
+				makeSelectionBox()
+			}
 		}
 	}
 	
@@ -355,6 +358,8 @@ class ViewController: UIViewController {
 			case .Blue: tileView.backgroundColor = UIColor.blueColor()
 			case .Yellow: tileView.backgroundColor = UIColor.yellowColor()
 			case .Green: tileView.backgroundColor = UIColor.greenColor()
+			case .Gray: tileView.backgroundColor = UIColor.darkGrayColor()
+			case .Purple: tileView.backgroundColor = UIColor.purpleColor()
 			case .Black: tileView.backgroundColor = UIColor.blackColor()
 			}
 			
