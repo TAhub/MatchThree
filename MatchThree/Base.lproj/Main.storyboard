@@ -19,20 +19,31 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5ZN-BW-m9S">
-                                <rect key="frame" x="0.0" y="314" width="414" height="414"/>
+                                <rect key="frame" x="0.0" y="28" width="414" height="414"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="5ZN-BW-m9S" secondAttribute="height" id="jTr-jC-SvA"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GYa-0R-NxY">
+                                <rect key="frame" x="0.0" y="-971" width="414" height="999"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="999" id="fID-8O-dJe"/>
                                 </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" red="0.61988848008625919" green="0.069532126701252306" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="5ZN-BW-m9S" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" priority="500" id="89x-qp-xt2"/>
+                            <constraint firstItem="GYa-0R-NxY" firstAttribute="width" secondItem="5ZN-BW-m9S" secondAttribute="width" id="BQe-tq-yzz"/>
+                            <constraint firstItem="5ZN-BW-m9S" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="8" symbolic="YES" id="E55-wV-G1r"/>
                             <constraint firstItem="5ZN-BW-m9S" firstAttribute="width" relation="lessThanOrEqual" secondItem="8bC-Xf-vdC" secondAttribute="width" id="EKs-dS-6Qv"/>
+                            <constraint firstItem="5ZN-BW-m9S" firstAttribute="top" secondItem="GYa-0R-NxY" secondAttribute="bottom" id="IdW-mO-JTY"/>
                             <constraint firstItem="5ZN-BW-m9S" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="Ohv-ri-M3u"/>
                             <constraint firstItem="5ZN-BW-m9S" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" priority="500" id="TzJ-27-DWe"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="5ZN-BW-m9S" secondAttribute="bottom" constant="8" symbolic="YES" id="lVI-5c-usd"/>
+                            <constraint firstItem="GYa-0R-NxY" firstAttribute="centerX" secondItem="5ZN-BW-m9S" secondAttribute="centerX" id="oYV-zl-Oyt"/>
                             <constraint firstItem="5ZN-BW-m9S" firstAttribute="height" relation="lessThanOrEqual" secondItem="8bC-Xf-vdC" secondAttribute="height" id="t5D-bF-Q2q"/>
                             <constraint firstItem="5ZN-BW-m9S" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="vmN-qW-dpz"/>
                         </constraints>
@@ -42,6 +53,7 @@
                                 <exclude reference="EKs-dS-6Qv"/>
                                 <exclude reference="Ohv-ri-M3u"/>
                                 <exclude reference="t5D-bF-Q2q"/>
+                                <exclude reference="lVI-5c-usd"/>
                             </mask>
                         </variation>
                     </view>

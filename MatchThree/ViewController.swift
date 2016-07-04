@@ -9,7 +9,7 @@
 import UIKit
 
 let swapTime = 0.5
-let dropTime = 0.25
+let dropTimePerLevel = 0.15
 let zapTime = 0.5
 
 class ViewController: UIViewController {
@@ -68,7 +68,6 @@ class ViewController: UIViewController {
 						self.updateTileRepresentations()
 					})
 					{ (completed) in
-						self.animating = false
 						self.collapseMatches()
 					}
 				}
@@ -104,13 +103,19 @@ class ViewController: UIViewController {
 				}
 				self.deadTileRepresentations.removeAll()
 				
-				self.updateTileRepresentations()
-				
-				self.collapseMatches()
+				let dropHeight = self.generateNewTileRepresentationsInSky()
+				UIView.animateWithDuration(dropTimePerLevel * Double(dropHeight / self.tileSize), animations:
+				{
+					self.updateTileRepresentations()
+				})
+				{ (completed) in
+					self.collapseMatches()
+				}
 			}
 		}
 		else
 		{
+			self.animating = false
 			self.selectX = nil
 		}
 	}
@@ -147,6 +152,43 @@ class ViewController: UIViewController {
 		
 		//and replace the old list
 		tileRepresentations = newReps
+	}
+	
+	private func generateNewTileRepresentationsInSky() -> CGFloat
+	{
+		//get all the new reps
+		var newReps = [UIView]()
+		for y in 0..<board.size
+		{
+			for x in 0..<board.size
+			{
+				if let tile = board.tileAt(x: x, y: y)
+				{
+					if tileRepresentations[tile.identifier] == nil
+					{
+						let rep = getViewForTile(x: x, y: y)
+						newReps.append(rep)
+					}
+				}
+			}
+		}
+		
+		//find the highest-y new rep
+		var highestY:CGFloat = 0
+		for rep in newReps
+		{
+			highestY = max(highestY, rep.frame.origin.y)
+		}
+		
+		highestY += tileSize
+		
+		//now use that value to move all the reps up
+		for rep in newReps
+		{
+			rep.frame = CGRectMake(rep.frame.origin.x, rep.frame.origin.y - highestY, tileSize, tileSize)
+		}
+		
+		return highestY
 	}
 	
 	private func updateTileRepresentations()
