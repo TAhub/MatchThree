@@ -17,7 +17,7 @@ class GameBoardTests: XCTestCase {
         super.setUp()
         // Put setup code here. This method is called before the invocation of each test method in the class.
 		
-		gameBoard = GameBoard(size: 3)
+		gameBoard = GameBoard(size: 3, generationMethod: GameBoardGenerationMethod.AllRed)
     }
 	
 	//MARK: constants for quick array building
@@ -81,6 +81,20 @@ class GameBoardTests: XCTestCase {
 		XCTAssertTrue(compareAgainst(comparisonBoard))
 	}
 	
+	func testCollapseMatch()
+	{
+		let comparisonBoard = [red, yellow, red, yellow, blue, yellow, green, green, green]
+		let comparisonBoardCollapsed = [red, red, red, red, yellow, red, yellow, blue, yellow]
+		gameBoard.setBoard(comparisonBoard)
+		let match = gameBoard.findMatch()
+		XCTAssertNotNil(match)
+		if let match = match
+		{
+			gameBoard.collapseMatch(match)
+			XCTAssertTrue(compareAgainst(comparisonBoardCollapsed))
+		}
+	}
+	
 	func testFindMatchStartsAtTopWhenEqual()
 	{
 		let comparisonBoard = [red, red, red, blue, blue, blue, green, green, green]
@@ -93,7 +107,7 @@ class GameBoardTests: XCTestCase {
 	
 	func testFindMatchStartsWithLargest()
 	{
-		gameBoard = GameBoard(size: 4)
+		gameBoard = GameBoard(size: 4, generationMethod: GameBoardGenerationMethod.AllRed)
 		let comparisonBoard = [red, red, red, yellow, blue, blue, blue, blue, green, green, green, yellow, yellow, red, yellow, red]
 		gameBoard.setBoard(comparisonBoard)
 		

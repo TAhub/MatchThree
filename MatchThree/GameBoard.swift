@@ -32,14 +32,23 @@ func ==(lhs:Match, rhs:Match) -> Bool
 }
 
 //MARK: gameboard definition
+
+enum GameBoardGenerationMethod
+{
+	case AllRed
+	case Random
+}
+
 class GameBoard
 {
 	let size:Int
 	private var board:[GameTile]
+	private let generationMethod:GameBoardGenerationMethod
 	
-	init(size:Int)
+	init(size:Int, generationMethod:GameBoardGenerationMethod)
 	{
 		self.size = size
+		self.generationMethod = generationMethod
 		
 		//initialize the board
 		board = [GameTile]()
@@ -79,6 +88,31 @@ class GameBoard
 		rotateInner()
 		{ (nw, ne, se, sw) in
 			return (ne, se, sw, nw)
+		}
+	}
+	
+	func collapseMatch(match:Match)
+	{
+		//move everything above the bottom of the match tiles down (match.height) tiles
+		for x in match.x..<match.x+match.width
+		{
+			//look at the y values in reverse order so that the operation can be done in place
+			for y in (0..<match.y+match.height).reverse()
+			{
+				let comparisonY = y - match.height
+				let tileFrom:GameTile
+				if comparisonY < 0
+				{
+					//TODO: generate a random tile; for now it's just red
+					tileFrom = GameTile(color: GameTileColor.Red, property: GameTileProperty.None)
+				}
+				else
+				{
+					tileFrom = board[toI(x: x, y: comparisonY)]
+				}
+				
+				board[toI(x: x, y: y)] = tileFrom
+			}
 		}
 	}
 	
