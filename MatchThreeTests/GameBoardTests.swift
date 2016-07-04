@@ -42,6 +42,41 @@ class GameBoardTests: XCTestCase {
 		gameBoard.setBoard(comparisonBoard)
 		XCTAssertTrue(compareAgainst(comparisonBoard))
 	}
+	
+	func testCanSwap()
+	{
+		//you aren't allowed to swap if there is already a three-in-a-row
+		XCTAssertFalse(gameBoard.canSwap)
+		
+		let comparisonBoard = [red, yellow, red,
+		                       yellow, red, yellow,
+		                       red, yellow, red]
+		gameBoard.setBoard(comparisonBoard)
+		XCTAssertTrue(gameBoard.canSwap)
+	}
+	
+	func testSwap()
+	{
+		let comparisonBoard = [red, yellow, red,
+		                       yellow, red, blue,
+		                       green, blue, red]
+		let comparisonBoardPostSwap = [red, red, red,
+		                               yellow, yellow, blue,
+		                               green, blue, red]
+		
+		//you aren't allowed to swap non-adjacent tiles, even if it would be a good move
+		gameBoard.setBoard(comparisonBoard)
+		XCTAssertFalse(gameBoard.swap(xFrom: 2, yFrom: 2, xTo: 1, yTo: 0))
+		
+		//you aren't allowed to swap if it wouldn't create a match
+		gameBoard.setBoard(comparisonBoard)
+		XCTAssertFalse(gameBoard.swap(xFrom: 1, yFrom: 1, xTo: 1, yTo: 2))
+		
+		//otherwise, the swap works
+		gameBoard.setBoard(comparisonBoard)
+		XCTAssertTrue(gameBoard.swap(xFrom: 1, yFrom: 1, xTo: 1, yTo: 0))
+		XCTAssertTrue(compareAgainst(comparisonBoardPostSwap))
+	}
 
 	func testRotate()
 	{
@@ -95,12 +130,31 @@ class GameBoardTests: XCTestCase {
 		}
 	}
 	
+	func testCollapseVerticalMatch()
+	{
+		let comparisonBoard = [green, yellow, blue,
+		                       green, blue, yellow,
+		                       green, yellow, blue]
+		let comparisonBoardCollapsed = [red, yellow, blue,
+		                                red, blue, yellow,
+		                                red, yellow, blue]
+		gameBoard.setBoard(comparisonBoard)
+		let match = gameBoard.findMatch()
+		XCTAssertNotNil(match)
+		if let match = match
+		{
+			gameBoard.collapseMatch(match)
+			XCTAssertTrue(compareAgainst(comparisonBoardCollapsed))
+		}
+	}
+	
 	func testFindMatchStartsAtTopWhenEqual()
 	{
 		let comparisonBoard = [red, red, red, blue, blue, blue, green, green, green]
 		gameBoard.setBoard(comparisonBoard)
 		
 		let match = gameBoard.findMatch()
+		XCTAssertTrue(gameBoard.matchExists)
 		XCTAssertNotNil(match)
 		XCTAssertTrue(match ?? Match(x: 0, y: 0, width: 0, height: 0) == Match(x: 0, y: 0, width: 3, height: 1))
 	}
@@ -112,8 +166,21 @@ class GameBoardTests: XCTestCase {
 		gameBoard.setBoard(comparisonBoard)
 		
 		let match = gameBoard.findMatch()
+		XCTAssertTrue(gameBoard.matchExists)
 		XCTAssertNotNil(match)
 		XCTAssertTrue(match ?? Match(x: 0, y: 0, width: 0, height: 0) == Match(x: 0, y: 1, width: 4, height: 1))
+	}
+	
+	func testNotFindMatchIfThereIsNone()
+	{
+		let comparisonBoard = [red, yellow, red,
+		                       yellow, red, yellow,
+		                       red, yellow, red]
+		gameBoard.setBoard(comparisonBoard)
+		
+		let match = gameBoard.findMatch()
+		XCTAssertFalse(gameBoard.matchExists)
+		XCTAssertNil(match)
 	}
 	
 	//MARK: helper functions

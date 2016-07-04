@@ -91,6 +91,43 @@ class GameBoard
 		}
 	}
 	
+	var canSwap:Bool
+	{
+		return !matchExists
+	}
+	
+	func swap(xFrom xFrom:Int, yFrom:Int, xTo:Int, yTo:Int) -> Bool
+	{
+		//don't bother swapping if you can't
+		if !canSwap
+		{
+			return false
+		}
+		
+		//make sure the tiles are adjacent, and are actual tiles and such
+		if abs(xFrom - xTo) + abs(yFrom - yTo) != 1 && tileAt(x: xFrom, y: yFrom) != nil && tileAt(x: xTo, y: yTo) != nil
+		{
+			return false
+		}
+		
+		//experimentally swap the two tiles
+		let fromTile = board[toI(x: xFrom, y: yFrom)]
+		let toTile = board[toI(x: xTo, y: yTo)]
+		board[toI(x: xFrom, y: yFrom)] = toTile
+		board[toI(x: xTo, y: yTo)] = fromTile
+		
+		if matchExists
+		{
+			//the swap was a good one, so it can happen
+			return true
+		}
+		
+		//otherwise, the swap didn't do anything, so undo it
+		board[toI(x: xFrom, y: yFrom)] = fromTile
+		board[toI(x: xTo, y: yTo)] = toTile
+		return false
+	}
+	
 	func collapseMatch(match:Match)
 	{
 		//move everything above the bottom of the match tiles down (match.height) tiles
@@ -118,6 +155,19 @@ class GameBoard
 	
 	func findMatch() -> Match?
 	{
+		return findMatch(false)
+	}
+	
+	var matchExists:Bool
+	{
+		return findMatch(true) != nil
+	}
+	
+	private func findMatch(firstMatch:Bool) -> Match?
+	{
+		//the "firstMatch" variable returns the first match, whether or not it is the best one
+		//this is mostly useful for finding if there IS a match
+		
 		var matches = [Match]()
 		for y in 0..<size
 		{
@@ -150,6 +200,10 @@ class GameBoard
 				else if matchHeight >= minMatchSize
 				{
 					matches.append(Match(x: x, y: y, width: 1, height: matchHeight))
+				}
+				if firstMatch && matches.count > 0
+				{
+					return matches.first
 				}
 			}
 		}
