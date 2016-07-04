@@ -12,7 +12,10 @@
 		E4F10CFB1D2ACE4D005DA363 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E4F10CF91D2ACE4D005DA363 /* Main.storyboard */; };
 		E4F10CFD1D2ACE4D005DA363 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E4F10CFC1D2ACE4D005DA363 /* Assets.xcassets */; };
 		E4F10D001D2ACE4D005DA363 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E4F10CFE1D2ACE4D005DA363 /* LaunchScreen.storyboard */; };
-		E4F10D0B1D2ACE4D005DA363 /* MatchThreeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F10D0A1D2ACE4D005DA363 /* MatchThreeTests.swift */; };
+		E4F10D1A1D2ACF37005DA363 /* GameBoardTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F10D191D2ACF37005DA363 /* GameBoardTests.swift */; };
+		E4F10D1C1D2ACF74005DA363 /* GameBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F10D1B1D2ACF74005DA363 /* GameBoard.swift */; };
+		E4F10D1E1D2AD0D9005DA363 /* GameTileTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F10D1D1D2AD0D9005DA363 /* GameTileTests.swift */; };
+		E4F10D201D2AD12D005DA363 /* GameTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F10D1F1D2AD12D005DA363 /* GameTile.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,8 +37,11 @@
 		E4F10CFF1D2ACE4D005DA363 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E4F10D011D2ACE4D005DA363 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E4F10D061D2ACE4D005DA363 /* MatchThreeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MatchThreeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		E4F10D0A1D2ACE4D005DA363 /* MatchThreeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchThreeTests.swift; sourceTree = "<group>"; };
 		E4F10D0C1D2ACE4D005DA363 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E4F10D191D2ACF37005DA363 /* GameBoardTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameBoardTests.swift; sourceTree = "<group>"; };
+		E4F10D1B1D2ACF74005DA363 /* GameBoard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameBoard.swift; sourceTree = "<group>"; };
+		E4F10D1D1D2AD0D9005DA363 /* GameTileTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameTileTests.swift; sourceTree = "<group>"; };
+		E4F10D1F1D2AD12D005DA363 /* GameTile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameTile.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,7 +94,8 @@
 		E4F10D091D2ACE4D005DA363 /* MatchThreeTests */ = {
 			isa = PBXGroup;
 			children = (
-				E4F10D0A1D2ACE4D005DA363 /* MatchThreeTests.swift */,
+				E4F10D191D2ACF37005DA363 /* GameBoardTests.swift */,
+				E4F10D1D1D2AD0D9005DA363 /* GameTileTests.swift */,
 				E4F10D0C1D2ACE4D005DA363 /* Info.plist */,
 			);
 			path = MatchThreeTests;
@@ -97,6 +104,8 @@
 		E4F10D151D2ACE9C005DA363 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				E4F10D1F1D2AD12D005DA363 /* GameTile.swift */,
+				E4F10D1B1D2ACF74005DA363 /* GameBoard.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -230,6 +239,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				E4F10CF81D2ACE4D005DA363 /* ViewController.swift in Sources */,
+				E4F10D201D2AD12D005DA363 /* GameTile.swift in Sources */,
+				E4F10D1C1D2ACF74005DA363 /* GameBoard.swift in Sources */,
 				E4F10CF61D2ACE4D005DA363 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -238,7 +249,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E4F10D0B1D2ACE4D005DA363 /* MatchThreeTests.swift in Sources */,
+				E4F10D1A1D2ACF37005DA363 /* GameBoardTests.swift in Sources */,
+				E4F10D1E1D2AD0D9005DA363 /* GameTileTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -381,10 +393,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = MatchThreeTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = THEODAB.MatchThreeTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MatchThree.app/MatchThree";
 			};
 			name = Debug;
@@ -393,6 +407,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = MatchThreeTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = THEODAB.MatchThreeTests;
