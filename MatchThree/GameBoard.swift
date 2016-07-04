@@ -202,6 +202,53 @@ class GameBoard
 		return findMatch(true) != nil
 	}
 	
+	var moveExists:Bool
+	{
+		for y in 0..<size
+		{
+			for x in 0..<size
+			{
+				//for every tile, check for a horizontal and a vertical match
+				
+				for j in 0..<2
+				{
+					let oX = x + (j == 0 ? 1 : 0)
+					let oY = y + (j == 0 ? 0 : 1)
+					
+					if oX < size && oY < size
+					{
+						let tile = board[toI(x: x, y: y)]
+						let oTile = board[toI(x: oX, y: oY)]
+						
+						//check to see if you can discard this move for any trivial reason
+						if tile.color != oTile.color
+						{
+							//experimentally try the move
+							board[toI(x: x, y: y)] = oTile
+							board[toI(x: oX, y: oY)] = tile
+							
+							//see if there are now any matches
+							//TODO: do this in a more efficient way; maybe only check the area within radius (minMatchSize + 1) of (x, y)?
+							let exists = matchExists
+							
+							//and undo the move
+							board[toI(x: x, y: y)] = tile
+							board[toI(x: oX, y: oY)] = oTile
+							
+							//if there was a match, return yes, there was a move
+							if exists
+							{
+								return true
+							}
+						}
+					}
+				}
+			}
+		}
+		
+		return false
+	}
+	
 	//MARK: helper methods
 	
 	private func markTiles()

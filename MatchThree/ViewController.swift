@@ -177,17 +177,57 @@ class ViewController: UIViewController {
 				}
 			}
 		}
+		else if secondsLeft == 0
+		{
+			gameOver()
+		}
+		else if !board.moveExists
+		{
+			//this happens after game over because there's no point animating the board re-making if it's just going to then end
+			
+			//fade out then back in
+			fadeAllTiles(0)
+			{
+				for subview in self.gameView.subviews
+				{
+					subview.removeFromSuperview()
+				}
+				self.tileRepresentations.removeAll()
+				
+				//make a new board, and add the tles from it
+				self.board = GameBoard(size: self.board.size, generationMethod: .Random)
+				for y in 0..<self.board.size
+				{
+					for x in 0..<self.board.size
+					{
+						let rep = self.getViewForTile(x: x, y: y)
+						rep.alpha = 0
+					}
+				}
+				
+				self.fadeAllTiles(1)
+				{
+					self.animating = false
+				}
+			}
+		}
 		else
 		{
 			self.animating = false
-			
-			//TODO: test to see if there are no moves at all
-			//if so, re-make the board
-			
-			if secondsLeft == 0
+		}
+	}
+	
+	private func fadeAllTiles(toAlpha:CGFloat, completion:()->())
+	{
+		UIView.animateWithDuration(zapTime, animations:
+		{
+			for subview in self.gameView.subviews
 			{
-				gameOver()
+				subview.alpha = toAlpha
 			}
+		})
+		{ (completed) in
+			completion()
 		}
 	}
 	
@@ -198,8 +238,16 @@ class ViewController: UIViewController {
 			destroySelectionBox()
 		}
 		
-		//TODO: end the game
-		print("GAME OVER")
+		fadeAllTiles(0)
+		{
+			for subview in self.gameView.subviews
+			{
+				subview.removeFromSuperview()
+			}
+			
+			//TODO: end the game
+			print("GAME OVER")
+		}
 	}
 	
 	private func findDeadTileRepresentations()

@@ -208,6 +208,21 @@ class GameBoardTests: XCTestCase {
 		XCTAssertNil(match)
 	}
 	
+	func testDetectDeadEnd()
+	{
+		let comparisonBoardDead = [red, yellow, red,
+		                           green, blue, green,
+		                           red, yellow, red]
+		let comparisonBoardAlive = [red, yellow, red,
+		                            yellow, red, yellow,
+		                            red, yellow, red]
+		
+		gameBoard.setBoard(comparisonBoardAlive)
+		XCTAssertTrue(gameBoard.moveExists)
+		gameBoard.setBoard(comparisonBoardDead)
+		XCTAssertFalse(gameBoard.moveExists)
+	}
+	
 	//MARK: random tests
 	
 	func testRandomNoStartingMatches()
