@@ -47,6 +47,7 @@ class GameBoard
 	let size:Int
 	private var board:[GameTile]!
 	private let generationMethod:GameBoardGenerationMethod
+	private var identifierOn = 0
 	
 	init(size:Int, generationMethod:GameBoardGenerationMethod)
 	{
@@ -54,6 +55,7 @@ class GameBoard
 		self.generationMethod = generationMethod
 		
 		while (!genBoard()) {}
+		markTiles()
 	}
 	
 	private func genBoard() -> Bool
@@ -103,6 +105,7 @@ class GameBoard
 	func setBoard(setTo:[GameTile])
 	{
 		board = setTo
+		markTiles()
 	}
 	
 	func rotateClockwise()
@@ -180,6 +183,7 @@ class GameBoard
 				board[toI(x: x, y: y)] = tileFrom
 			}
 		}
+		markTiles()
 	}
 	
 	func findMatch() -> Match?
@@ -193,6 +197,20 @@ class GameBoard
 	}
 	
 	//MARK: helper methods
+	
+	private func markTiles()
+	{
+		//provide an identifier to everything with an identifier of -1
+		for i in 0..<board.count
+		{
+			let tile = board[i]
+			if tile.identifier == -1
+			{
+				board[i] = GameTile(color: tile.color, property: tile.property, identifier: identifierOn)
+				identifierOn += 1
+			}
+		}
+	}
 	
 	private func breakMatch(match:Match)
 	{
@@ -245,7 +263,8 @@ class GameBoard
 			default: color = .Yellow
 			}
 		}
-		return GameTile(color: color, property: GameTileProperty.None)
+		markTiles()
+		return GameTile(color: color)
 	}
 	
 	private func findMatch(firstMatch:Bool) -> Match?

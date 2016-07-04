@@ -12,8 +12,8 @@ import XCTest
 class GameTileTests: XCTestCase {
 	func testEquatable()
 	{
-		XCTAssertTrue(GameTile(color: GameTileColor.Red, property: GameTileProperty.None) == GameTile(color: GameTileColor.Red, property: GameTileProperty.None))
-		XCTAssertFalse(GameTile(color: GameTileColor.Blue, property: GameTileProperty.None) == GameTile(color: GameTileColor.Red, property: GameTileProperty.None))
-		XCTAssertFalse(GameTile(color: GameTileColor.Red, property: GameTileProperty.Clockwise) == GameTile(color: GameTileColor.Red, property: GameTileProperty.None))
+		XCTAssertTrue(GameTile(color: GameTileColor.Red) == GameTile(color: GameTileColor.Red))
+		XCTAssertFalse(GameTile(color: GameTileColor.Blue) == GameTile(color: GameTileColor.Red))
+		XCTAssertFalse(GameTile(color: GameTileColor.Red, property: GameTileProperty.Clockwise) == GameTile(color: GameTileColor.Red))
 	}
 }

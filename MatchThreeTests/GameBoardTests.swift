@@ -21,10 +21,10 @@ class GameBoardTests: XCTestCase {
     }
 	
 	//MARK: constants for quick array building
-	let red = GameTile(color: GameTileColor.Red, property: GameTileProperty.None)
-	let blue = GameTile(color: GameTileColor.Blue, property: GameTileProperty.None)
-	let green = GameTile(color: GameTileColor.Green, property: GameTileProperty.None)
-	let yellow = GameTile(color: GameTileColor.Yellow, property: GameTileProperty.None)
+	let red = GameTile(color: GameTileColor.Red)
+	let blue = GameTile(color: GameTileColor.Blue)
+	let green = GameTile(color: GameTileColor.Green)
+	let yellow = GameTile(color: GameTileColor.Yellow)
 	
 	//MARK: tests
 	
@@ -46,11 +46,17 @@ class GameBoardTests: XCTestCase {
 		XCTAssertNil(gameBoard.tileAt(x: 0, y: -1))
 	}
 	
+	func testBoardBeginsMarked()
+	{
+		XCTAssertTrue(allTilesMarked())
+	}
+	
 	func testSetBoard()
 	{
 		let comparisonBoard = [red, red, red, blue, blue, blue, green, green, green]
 		gameBoard.setBoard(comparisonBoard)
 		XCTAssertTrue(compareAgainst(comparisonBoard))
+		XCTAssertTrue(allTilesMarked())
 	}
 	
 	func testCanSwap()
@@ -63,6 +69,7 @@ class GameBoardTests: XCTestCase {
 		                       red, yellow, red]
 		gameBoard.setBoard(comparisonBoard)
 		XCTAssertTrue(gameBoard.canSwap)
+		XCTAssertTrue(allTilesMarked())
 	}
 	
 	func testSwap()
@@ -137,6 +144,7 @@ class GameBoardTests: XCTestCase {
 		{
 			gameBoard.collapseMatch(match)
 			XCTAssertTrue(compareAgainst(comparisonBoardCollapsed))
+			XCTAssertTrue(allTilesMarked())
 		}
 	}
 	
@@ -233,6 +241,22 @@ class GameBoardTests: XCTestCase {
 			}
 		}
 		
+		return true
+	}
+	
+	func allTilesMarked() -> Bool
+	{
+		for y in 0..<gameBoard.size
+		{
+			for x in 0..<gameBoard.size
+			{
+				let tileAt = gameBoard.tileAt(x: x, y: y)
+				if tileAt?.identifier == -1
+				{
+					return false
+				}
+			}
+		}
 		return true
 	}
 }

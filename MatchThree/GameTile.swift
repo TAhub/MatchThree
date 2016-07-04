@@ -27,6 +27,28 @@ struct GameTile
 {
 	let color:GameTileColor
 	let property:GameTileProperty
+	let identifier:Int
+	
+	init(color:GameTileColor)
+	{
+		self.color = color
+		self.property = .None
+		self.identifier = -1
+	}
+	
+	init(color:GameTileColor, property:GameTileProperty)
+	{
+		self.color = color
+		self.property = property
+		self.identifier = -1
+	}
+	
+	init(color:GameTileColor, property:GameTileProperty, identifier:Int)
+	{
+		self.color = color
+		self.property = property
+		self.identifier = identifier
+	}
 }
 
 extension GameTile:Equatable {}
