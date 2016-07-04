@@ -13,12 +13,15 @@ class ViewController: UIViewController {
 	@IBOutlet weak var gameView: UIView!
 	private var board:GameBoard = GameBoard(size: 8, generationMethod: GameBoardGenerationMethod.Random)
 	
+	private var selectX:Int?
+	private var selectY:Int!
+	
 	override func viewDidLoad()
 	{
 		super.viewDidLoad()
 		
 		let recognizer = UITapGestureRecognizer()
-//		recognizer.addTarget(self, action: #selector(TESTFUNC))
+		recognizer.addTarget(self, action: #selector(selectTile))
 		gameView.addGestureRecognizer(recognizer)
 		
 		for y in 0..<board.size
@@ -30,7 +33,50 @@ class ViewController: UIViewController {
 		}
 	}
 	
-	
+	func selectTile(sender:UITapGestureRecognizer)
+	{
+		let location = sender.locationInView(gameView)
+		let senderX = Int(location.x / tileSize)
+		let senderY = Int(location.y / tileSize)
+		if let selectX = selectX
+		{
+			if selectX == senderX && selectY == senderY
+			{
+				self.selectX = nil
+			}
+			else if (board.canSwap)
+			{
+				if (board.swap(xFrom: selectX, yFrom: selectY, xTo: senderX, yTo: senderY))
+				{
+					//cascade matches
+					while let match = board.findMatch()
+					{
+						board.collapseMatch(match)
+					}
+					
+					//remake view
+					for subview in gameView.subviews
+					{
+						subview.removeFromSuperview()
+					}
+					for y in 0..<board.size
+					{
+						for x in 0..<board.size
+						{
+							makeViewForTile(x: x, y: y)
+						}
+					}
+					
+					self.selectX = nil
+				}
+			}
+		}
+		else
+		{
+			selectX = senderX
+			selectY = senderY
+		}
+	}
 	
 	private var tileSize:CGFloat
 	{

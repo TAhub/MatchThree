@@ -192,7 +192,9 @@ class GameBoard
 		return findMatch(true) != nil
 	}
 	
-	func breakMatch(match:Match)
+	//MARK: helper methods
+	
+	private func breakMatch(match:Match)
 	{
 		if generationMethod != .Random
 		{
@@ -226,8 +228,6 @@ class GameBoard
 			}
 		}
 	}
-	
-	//MARK: helper methods
 	
 	private func generateTile() -> GameTile
 	{
