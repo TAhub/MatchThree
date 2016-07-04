@@ -77,12 +77,10 @@
 		E4F10CF41D2ACE4D005DA363 /* MatchThree */ = {
 			isa = PBXGroup;
 			children = (
-				E4F10CF51D2ACE4D005DA363 /* AppDelegate.swift */,
-				E4F10CF71D2ACE4D005DA363 /* ViewController.swift */,
-				E4F10CF91D2ACE4D005DA363 /* Main.storyboard */,
-				E4F10CFC1D2ACE4D005DA363 /* Assets.xcassets */,
-				E4F10CFE1D2ACE4D005DA363 /* LaunchScreen.storyboard */,
-				E4F10D011D2ACE4D005DA363 /* Info.plist */,
+				E4F10D151D2ACE9C005DA363 /* Model */,
+				E4F10D171D2ACEB7005DA363 /* Controller */,
+				E4F10D161D2ACEA0005DA363 /* View */,
+				E4F10D181D2ACEBD005DA363 /* Supporting Files */,
 			);
 			path = MatchThree;
 			sourceTree = "<group>";
@@ -94,6 +92,40 @@
 				E4F10D0C1D2ACE4D005DA363 /* Info.plist */,
 			);
 			path = MatchThreeTests;
+			sourceTree = "<group>";
+		};
+		E4F10D151D2ACE9C005DA363 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		E4F10D161D2ACEA0005DA363 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				E4F10CF91D2ACE4D005DA363 /* Main.storyboard */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		E4F10D171D2ACEB7005DA363 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				E4F10CF71D2ACE4D005DA363 /* ViewController.swift */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		E4F10D181D2ACEBD005DA363 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				E4F10CFE1D2ACE4D005DA363 /* LaunchScreen.storyboard */,
+				E4F10CFC1D2ACE4D005DA363 /* Assets.xcassets */,
+				E4F10D011D2ACE4D005DA363 /* Info.plist */,
+				E4F10CF51D2ACE4D005DA363 /* AppDelegate.swift */,
+			);
+			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
