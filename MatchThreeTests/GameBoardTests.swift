@@ -81,6 +81,27 @@ class GameBoardTests: XCTestCase {
 		XCTAssertTrue(compareAgainst(comparisonBoard))
 	}
 	
+	func testFindMatchStartsAtTopWhenEqual()
+	{
+		let comparisonBoard = [red, red, red, blue, blue, blue, green, green, green]
+		gameBoard.setBoard(comparisonBoard)
+		
+		let match = gameBoard.findMatch()
+		XCTAssertNotNil(match)
+		XCTAssertTrue(match ?? Match(x: 0, y: 0, width: 0, height: 0) == Match(x: 0, y: 0, width: 3, height: 1))
+	}
+	
+	func testFindMatchStartsWithLargest()
+	{
+		gameBoard = GameBoard(size: 4)
+		let comparisonBoard = [red, red, red, yellow, blue, blue, blue, blue, green, green, green, yellow, yellow, red, yellow, red]
+		gameBoard.setBoard(comparisonBoard)
+		
+		let match = gameBoard.findMatch()
+		XCTAssertNotNil(match)
+		XCTAssertTrue(match ?? Match(x: 0, y: 0, width: 0, height: 0) == Match(x: 0, y: 1, width: 4, height: 1))
+	}
+	
 	//MARK: helper functions
 	func compareAgainst(compareArray:[GameTile]) -> Bool
 	{

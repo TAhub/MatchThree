@@ -8,6 +8,30 @@
 
 import Foundation
 
+let minMatchSize = 3
+
+//MARK: match definition
+struct Match
+{
+	let x:Int
+	let y:Int
+	let width:Int
+	let height:Int
+	
+	var points:Int
+	{
+		return width + height - 1
+	}
+}
+
+extension Match:Equatable {}
+
+func ==(lhs:Match, rhs:Match) -> Bool
+{
+	return lhs.x == rhs.x && lhs.y == rhs.y && lhs.width == rhs.width && lhs.height == rhs.height
+}
+
+//MARK: gameboard definition
 class GameBoard
 {
 	let size:Int
@@ -56,6 +80,57 @@ class GameBoard
 		{ (nw, ne, se, sw) in
 			return (ne, se, sw, nw)
 		}
+	}
+	
+	func findMatch() -> Match?
+	{
+		var matches = [Match]()
+		for y in 0..<size
+		{
+			for x in 0..<size
+			{
+				let tile = board[toI(x: x, y: y)]
+				var matchWidth = 0
+				var matchHeight = 0
+				for x2 in x..<size
+				{
+					let oTile = board[toI(x: x2, y: y)]
+					if oTile.color == tile.color
+					{
+						matchWidth += 1
+					}
+				}
+				for y2 in y..<size
+				{
+					let oTile = board[toI(x: x, y: y2)]
+					if oTile.color == tile.color
+					{
+						matchHeight += 1
+					}
+				}
+				
+				if matchWidth > matchHeight && matchWidth >= minMatchSize
+				{
+					matches.append(Match(x: x, y: y, width: matchWidth, height: 1))
+				}
+				else if matchHeight >= minMatchSize
+				{
+					matches.append(Match(x: x, y: y, width: 1, height: matchHeight))
+				}
+			}
+		}
+		
+		//look over the matches to find the largest one, by points
+		var largestMatch:Match? = nil
+		for match in matches
+		{
+			if largestMatch?.points ?? 0 < match.points
+			{
+				largestMatch = match
+			}
+		}
+		
+		return largestMatch
 	}
 	
 	private func rotateInner(cornerClosure:(GameTile, GameTile, GameTile, GameTile)->(GameTile, GameTile, GameTile, GameTile))
