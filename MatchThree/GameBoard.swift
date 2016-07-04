@@ -73,7 +73,7 @@ class GameBoard
 		//make sure the board doesn't start with any matches
 		if generationMethod == .Random
 		{
-			print("LOOKING FOR MATCHES")
+//			print("LOOKING FOR MATCHES")
 			for _ in 0..<startGenMatchFixes
 			{
 				let match = findMatch(true)
@@ -216,7 +216,7 @@ class GameBoard
 	{
 		if generationMethod != .Random
 		{
-			print("  ERROR: tried to break matches while in non-random mode")
+//			print("  ERROR: tried to break matches while in non-random mode")
 			return
 		}
 		
@@ -239,7 +239,7 @@ class GameBoard
 			let newTile = generateTile()
 			if newTile.color != tile.color
 			{
-				print("  Found match with x=\(match.x), y=\(match.y), w=\(match.width), h=\(match.height) of color \(tile.color) with \(match.points) points; fixing at (\(pick.0),\(pick.1)) with color \(newTile.color)")
+//				print("  Found match with x=\(match.x), y=\(match.y), w=\(match.width), h=\(match.height) of color \(tile.color) with \(match.points) points; fixing at (\(pick.0),\(pick.1)) with color \(newTile.color)")
 				
 				board[toI(x: pick.0, y: pick.1)] = newTile
 				break
@@ -255,11 +255,12 @@ class GameBoard
 		case .AllRed: color = .Red
 		case .AllBlue: color = .Blue
 		default:
-			switch(arc4random_uniform(4))
+			switch(arc4random_uniform(5))
 			{
 			case 0: color = .Red
 			case 1: color = .Blue
 			case 2: color = .Green
+			case 3: color = .Black
 			default: color = .Yellow
 			}
 		}

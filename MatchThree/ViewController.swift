@@ -9,13 +9,13 @@
 import UIKit
 
 let swapTime = 0.5
-let dropTimePerLevel = 0.15
-let zapTime = 0.5
+let dropTimePerLevel = 0.1
+let zapTime = 0.35
 
 class ViewController: UIViewController {
 
 	@IBOutlet weak var gameView: UIView!
-	private var board:GameBoard = GameBoard(size: 8, generationMethod: GameBoardGenerationMethod.Random)
+	private var board:GameBoard = GameBoard(size: 7, generationMethod: GameBoardGenerationMethod.Random)
 	private var tileRepresentations = [Int:UIView]()
 	private var deadTileRepresentations = [UIView]()
 	
@@ -54,12 +54,15 @@ class ViewController: UIViewController {
 		{
 			if selectX == senderX && selectY == senderY
 			{
+				destroySelectionBox()
 				self.selectX = nil
 			}
 			else if (board.canSwap)
 			{
 				if (board.swap(xFrom: selectX, yFrom: selectY, xTo: senderX, yTo: senderY))
 				{
+					destroySelectionBox()
+					self.selectX = nil
 					self.animating = true
 					
 					//animate the swap
@@ -77,6 +80,25 @@ class ViewController: UIViewController {
 		{
 			selectX = senderX
 			selectY = senderY
+			makeSelectionBox()
+		}
+	}
+	
+	private func makeSelectionBox()
+	{
+		let rep = getViewForTile(x: selectX!, y: selectY)
+		
+		let selectionBox = UIView(frame: CGRectMake(0, 0, tileSize, tileSize))
+		selectionBox.backgroundColor = UIColor(hue: 0, saturation: 0, brightness: 1, alpha: 0.25)
+		rep.addSubview(selectionBox)
+	}
+	
+	private func destroySelectionBox()
+	{
+		let rep = getViewForTile(x: selectX!, y: selectY)
+		for subview in rep.subviews
+		{
+			subview.removeFromSuperview()
 		}
 	}
 	
@@ -116,7 +138,6 @@ class ViewController: UIViewController {
 		else
 		{
 			self.animating = false
-			self.selectX = nil
 		}
 	}
 	
@@ -225,6 +246,7 @@ class ViewController: UIViewController {
 			case .Blue: tileView.backgroundColor = UIColor.blueColor()
 			case .Yellow: tileView.backgroundColor = UIColor.yellowColor()
 			case .Green: tileView.backgroundColor = UIColor.greenColor()
+			case .Black: tileView.backgroundColor = UIColor.blackColor()
 			}
 			
 			//add the tile representation and register it with the representations dictionary

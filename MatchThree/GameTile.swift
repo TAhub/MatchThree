@@ -14,6 +14,7 @@ enum GameTileColor
 	case Blue
 	case Green
 	case Yellow
+	case Black
 }
 
 enum GameTileProperty
