@@ -28,6 +28,16 @@ class GameBoardTests: XCTestCase {
 	
 	//MARK: tests
 	
+	func testGenerationMethods()
+	{
+		let comparisonBoardAllRed = [red, red, red, red, red, red, red, red, red]
+		let comparisonBoardAllBlue = [blue, blue, blue, blue, blue, blue, blue, blue, blue]
+		
+		XCTAssertTrue(compareAgainst(comparisonBoardAllRed))
+		gameBoard = GameBoard(size: 3, generationMethod: GameBoardGenerationMethod.AllBlue)
+		XCTAssertTrue(compareAgainst(comparisonBoardAllBlue))
+	}
+	
 	func testTileAt()
 	{
 		XCTAssertNotNil(gameBoard.tileAt(x: 0, y: 0))
@@ -181,6 +191,63 @@ class GameBoardTests: XCTestCase {
 		let match = gameBoard.findMatch()
 		XCTAssertFalse(gameBoard.matchExists)
 		XCTAssertNil(match)
+	}
+	
+	//MARK: random tests
+	
+	func testBreakMatch()
+	{
+		let comparisonBoard = [red, red, red,
+		                       yellow, red, yellow,
+		                       red, yellow, red]
+		gameBoard.setBoard(comparisonBoard)
+		
+		if let match = gameBoard.findMatch()
+		{
+			//break match shouldn't do anything in non-random mode
+			gameBoard.breakMatch(match)
+			XCTAssertTrue(compareAgainst(comparisonBoard))
+			
+			//so switch to random mode
+			gameBoard = GameBoard(size: 3, generationMethod: .Random)
+			gameBoard.setBoard(comparisonBoard)
+			gameBoard.breakMatch(match)
+			
+			var nonReds = 0
+			if (gameBoard.tileAt(x: 0, y: 0)?.color ?? GameTileColor.Red != GameTileColor.Red)
+			{
+				nonReds += 1
+			}
+			if (gameBoard.tileAt(x: 1, y: 0)?.color ?? GameTileColor.Red != GameTileColor.Red)
+			{
+				nonReds += 1
+			}
+			if (gameBoard.tileAt(x: 2, y: 0)?.color ?? GameTileColor.Red != GameTileColor.Red)
+			{
+				nonReds += 1
+			}
+			XCTAssertEqual(nonReds, 1)
+		}
+		else
+		{
+			XCTAssertTrue(false)
+		}
+	}
+	
+	func testRandomNoStartingMatches()
+	{
+		//this isn't an ideal way to test things, but 20 loops through should hopefully be enough to get a reasonable idea
+		var startingMatch = false
+		for _ in 0..<20
+		{
+			gameBoard = GameBoard(size: 6, generationMethod: .Random)
+			if gameBoard.matchExists
+			{
+				startingMatch = true
+				break
+			}
+		}
+		XCTAssertFalse(startingMatch)
 	}
 	
 	//MARK: helper functions

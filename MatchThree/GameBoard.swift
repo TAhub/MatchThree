@@ -8,7 +8,9 @@
 
 import Foundation
 
+//MARK: constants
 let minMatchSize = 3
+let startGenMatchFixes = 30
 
 //MARK: match definition
 struct Match
@@ -36,13 +38,14 @@ func ==(lhs:Match, rhs:Match) -> Bool
 enum GameBoardGenerationMethod
 {
 	case AllRed
+	case AllBlue
 	case Random
 }
 
 class GameBoard
 {
 	let size:Int
-	private var board:[GameTile]
+	private var board:[GameTile]!
 	private let generationMethod:GameBoardGenerationMethod
 	
 	init(size:Int, generationMethod:GameBoardGenerationMethod)
@@ -50,16 +53,43 @@ class GameBoard
 		self.size = size
 		self.generationMethod = generationMethod
 		
+		while (!genBoard()) {}
+	}
+	
+	private func genBoard() -> Bool
+	{
 		//initialize the board
 		board = [GameTile]()
 		for _ in 0..<size
 		{
 			for _ in 0..<size
 			{
-				board.append(GameTile(color: GameTileColor.Red, property: GameTileProperty.None))
+				board.append(generateTile())
 			}
 		}
+		
+		//make sure the board doesn't start with any matches
+		if generationMethod == .Random
+		{
+			print("LOOKING FOR MATCHES")
+			for _ in 0..<startGenMatchFixes
+			{
+				let match = findMatch(true)
+				if let match = match
+				{
+					breakMatch(match)
+				}
+				else
+				{
+					return true
+				}
+			}
+			return false
+		}
+		return true
 	}
+	
+	//MARK: interface
 	
 	func tileAt(x x:Int, y:Int) -> GameTile?
 	{
@@ -140,8 +170,7 @@ class GameBoard
 				let tileFrom:GameTile
 				if comparisonY < 0
 				{
-					//TODO: generate a random tile; for now it's just red
-					tileFrom = GameTile(color: GameTileColor.Red, property: GameTileProperty.None)
+					tileFrom = generateTile()
 				}
 				else
 				{
@@ -161,6 +190,62 @@ class GameBoard
 	var matchExists:Bool
 	{
 		return findMatch(true) != nil
+	}
+	
+	func breakMatch(match:Match)
+	{
+		if generationMethod != .Random
+		{
+			print("  ERROR: tried to break matches while in non-random mode")
+			return
+		}
+		
+		//pick a random tile inside the match
+		var matchTiles = [(Int, Int)]()
+		for y in match.y..<match.height+match.y
+		{
+			for x in match.x..<match.width+match.x
+			{
+				matchTiles.append((x, y))
+			}
+		}
+		
+		let pick = matchTiles[Int(arc4random_uniform(UInt32(matchTiles.count)))]
+		
+		//now change the color of the tile to a different color
+		let tile = board[toI(x: pick.0, y: pick.1)]
+		while(true)
+		{
+			let newTile = generateTile()
+			if newTile.color != tile.color
+			{
+				print("  Found match with x=\(match.x), y=\(match.y), w=\(match.width), h=\(match.height) of color \(tile.color) with \(match.points) points; fixing at (\(pick.0),\(pick.1)) with color \(newTile.color)")
+				
+				board[toI(x: pick.0, y: pick.1)] = newTile
+				break
+			}
+		}
+	}
+	
+	//MARK: helper methods
+	
+	private func generateTile() -> GameTile
+	{
+		let color:GameTileColor
+		switch(generationMethod)
+		{
+		case .AllRed: color = .Red
+		case .AllBlue: color = .Blue
+		default:
+			switch(arc4random_uniform(4))
+			{
+			case 0: color = .Red
+			case 1: color = .Blue
+			case 2: color = .Green
+			default: color = .Yellow
+			}
+		}
+		return GameTile(color: color, property: GameTileProperty.None)
 	}
 	
 	private func findMatch(firstMatch:Bool) -> Match?
@@ -183,6 +268,10 @@ class GameBoard
 					{
 						matchWidth += 1
 					}
+					else
+					{
+						break
+					}
 				}
 				for y2 in y..<size
 				{
@@ -190,6 +279,10 @@ class GameBoard
 					if oTile.color == tile.color
 					{
 						matchHeight += 1
+					}
+					else
+					{
+						break
 					}
 				}
 				
