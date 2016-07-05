@@ -266,8 +266,22 @@ class ViewController: UIViewController {
 				subview.removeFromSuperview()
 			}
 			
-			//TODO: end the game
-			self.navigationController?.popViewControllerAnimated(true)
+			if self.board.score > 0
+			{
+				self.performSegueWithIdentifier("showScore", sender: self)
+			}
+			else
+			{
+				self.navigationController?.popViewControllerAnimated(true)
+			}
+		}
+	}
+	
+	override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?)
+	{
+		if let ssvc = segue.destinationViewController as? ScoreShowViewController
+		{
+			ssvc.score = board.score
 		}
 	}
 	

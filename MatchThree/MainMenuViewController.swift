@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import GameKit
 
-class MainMenuViewController: UIViewController {
+class MainMenuViewController: UIViewController, GKGameCenterControllerDelegate {
 
 	@IBOutlet weak var startButton: UIButton!
 	@IBOutlet weak var scoreButton: UIButton!
@@ -42,5 +43,21 @@ class MainMenuViewController: UIViewController {
 				}
 			}
 		}
+	}
+	
+	@IBAction func scoreButtonPressed()
+	{
+		if let id = GameKitHelper.sharedInstance.leaderboardIdentifier
+		{
+			let gcViewController = GKGameCenterViewController()
+			gcViewController.gameCenterDelegate = self
+			gcViewController.viewState = GKGameCenterViewControllerState.Leaderboards
+			gcViewController.leaderboardIdentifier = id
+			self.presentViewController(gcViewController, animated: true, completion: nil)
+		}
+	}
+	
+	func gameCenterViewControllerDidFinish(gameCenterViewController: GKGameCenterViewController) {
+		gameCenterViewController.dismissViewControllerAnimated(true, completion: nil)
 	}
 }
