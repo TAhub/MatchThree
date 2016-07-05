@@ -139,10 +139,10 @@
             </objects>
             <point key="canvasLocation" x="1798" y="314"/>
         </scene>
-        <!--View Controller-->
+        <!--Main Menu View Controller-->
         <scene sceneID="3rN-lB-IuY">
             <objects>
-                <viewController id="m1Y-hn-T1j" sceneMemberID="viewController">
+                <viewController id="m1Y-hn-T1j" customClass="MainMenuViewController" customModule="MatchThree" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Xf8-6K-Z28"/>
                         <viewControllerLayoutGuide type="bottom" id="3QQ-nh-eLh"/>
@@ -170,15 +170,21 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ce0-q2-Wls">
+                                <rect key="frame" x="276" y="508" width="48" height="30"/>
+                                <state key="normal" title="Scores"/>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="FqW-3B-jde" firstAttribute="width" secondItem="9NF-tu-Hl4" secondAttribute="width" multiplier="0.6" id="CXD-go-YvS"/>
                             <constraint firstItem="Wvf-BS-Cit" firstAttribute="centerX" secondItem="9NF-tu-Hl4" secondAttribute="centerX" id="EYO-PH-yha"/>
                             <constraint firstItem="HTp-nf-zvH" firstAttribute="top" secondItem="Xf8-6K-Z28" secondAttribute="bottom" constant="8" symbolic="YES" id="GOa-HU-FHY"/>
+                            <constraint firstItem="ce0-q2-Wls" firstAttribute="top" secondItem="Wvf-BS-Cit" secondAttribute="bottom" constant="8" symbolic="YES" id="NDD-E0-1te"/>
                             <constraint firstItem="FqW-3B-jde" firstAttribute="top" secondItem="HTp-nf-zvH" secondAttribute="bottom" constant="8" symbolic="YES" id="RKH-I0-wMH"/>
                             <constraint firstItem="Wvf-BS-Cit" firstAttribute="top" secondItem="FqW-3B-jde" secondAttribute="bottom" constant="8" symbolic="YES" id="aBG-oa-arO"/>
                             <constraint firstItem="Wvf-BS-Cit" firstAttribute="centerY" secondItem="9NF-tu-Hl4" secondAttribute="centerY" id="cB6-oy-Bkl"/>
+                            <constraint firstItem="ce0-q2-Wls" firstAttribute="centerX" secondItem="9NF-tu-Hl4" secondAttribute="centerX" id="hTM-0R-MI9"/>
                             <constraint firstItem="FqW-3B-jde" firstAttribute="centerY" secondItem="9NF-tu-Hl4" secondAttribute="centerY" id="iuA-sR-yDh"/>
                             <constraint firstItem="HTp-nf-zvH" firstAttribute="centerX" secondItem="9NF-tu-Hl4" secondAttribute="centerX" id="oFf-rl-loK"/>
                             <constraint firstItem="FqW-3B-jde" firstAttribute="centerX" secondItem="9NF-tu-Hl4" secondAttribute="centerX" id="orY-b3-Liy"/>
@@ -191,6 +197,10 @@
                         </variation>
                     </view>
                     <navigationItem key="navigationItem" id="Cin-oL-Bdr"/>
+                    <connections>
+                        <outlet property="scoreButton" destination="ce0-q2-Wls" id="VEG-LO-Oh2"/>
+                        <outlet property="startButton" destination="Wvf-BS-Cit" id="yy1-F0-TKr"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NiF-ZK-5ZM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
