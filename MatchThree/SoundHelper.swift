@@ -34,10 +34,8 @@ class SoundHelper
 		{
 			if let player = soundPlayers[id]
 			{
-				if !player.playing
-				{
-					player.play()
-				}
+				player.stop()
+				player.play()
 			}
 			else
 			{

@@ -15,6 +15,8 @@ let fadeTime = 1.5
 let playTime = 90
 let popupTime = 2.85
 let popupHeight:CGFloat = 100
+let cornerBevelFactor:CGFloat = 0.15
+let borderFactor:CGFloat = 0.1
 
 class ViewController: UIViewController {
 
@@ -68,14 +70,14 @@ class ViewController: UIViewController {
 	
 	func timerTick()
 	{
-		secondsLeft -= 1
+		secondsLeft = max(secondsLeft - 1, 0)
 		
 		timeCounter.text = "\(secondsLeft)"
 		
 		if secondsLeft == 0
 		{
 			//stop the timer
-			clockTimer.invalidate()
+			clockTimer?.invalidate()
 			
 			if !animating
 			{
@@ -156,8 +158,12 @@ class ViewController: UIViewController {
 		let rep = getViewForTile(x: selectX!, y: selectY)
 		
 		let selectionBox = UIView(frame: CGRectMake(0, 0, tileSize, tileSize))
-		selectionBox.backgroundColor = UIColor(hue: 0, saturation: 0, brightness: 1, alpha: 0.25)
+		selectionBox.layer.borderColor = UIColor(hue: 0, saturation: 0, brightness: 1, alpha: 0.5).CGColor
+		selectionBox.layer.borderWidth = tileSize * borderFactor
+		selectionBox.layer.cornerRadius = tileSize * cornerBevelFactor
 		rep.addSubview(selectionBox)
+		
+		
 	}
 	
 	private func destroySelectionBox()
@@ -461,6 +467,8 @@ class ViewController: UIViewController {
 			
 			let tileView = UIImageView(frame: CGRectMake(CGFloat(x) * tileSize, CGFloat(y) * tileSize, tileSize, tileSize))
 			updateTileColor(tileView, tile: tile)
+			
+			tileView.layer.cornerRadius = tileSize * cornerBevelFactor
 			
 			//add the tile representation and register it with the representations dictionary
 			gameView.addSubview(tileView)

@@ -218,7 +218,6 @@ class GameBoard
 			}
 		}
 		
-		//TODO: instead of rotating on the spot, make a rotate flag so they can happen one at a time
 		if rotate > 0
 		{
 			for _ in 0..<rotate
@@ -312,8 +311,7 @@ class GameBoard
 							board[toI(x: oX, y: oY)] = tile
 							
 							//see if there are now any matches
-							//TODO: do this in a more efficient way; maybe only check the area within radius (minMatchSize + 1) of (x, y)?
-							let exists = matchExists
+							let exists = matchExistsLocal(x: x, y: y)
 							
 							//and undo the move
 							board[toI(x: x, y: y)] = tile
@@ -422,6 +420,46 @@ class GameBoard
 		}
 		markTiles()
 		return GameTile(color: color)
+	}
+	
+	private func matchExistsLocal(x aroundX:Int, y aroundY:Int) -> Bool
+	{
+		for y in max(aroundY - 1, 0)...min(aroundY + 1, size - 1)
+		{
+			for x in max(aroundX - 1, 0)...min(aroundX + 1, size - 1)
+			{
+				let tile = board[toI(x: x, y: y)]
+				
+				if tile.canMatch
+				{
+					func exploreDirection(dX dX:Int, dY:Int) -> Bool
+					{
+						var atX = x
+						var atY = y
+						for _ in 1..<minMatchSize
+						{
+							atX += dX
+							atY += dY
+							if atX < 0 || atY < 0 || atX >= size || atY >= size
+							{
+								return false
+							}
+							if board[toI(x: atX, y: atY)].color != tile.color
+							{
+								return false
+							}
+						}
+						return true
+					}
+					
+					if exploreDirection(dX: 1, dY: 0) || exploreDirection(dX: -1, dY: 0) || exploreDirection(dX: 0, dY: 1) || exploreDirection(dX: 0, dY: -1)
+					{
+						return true
+					}
+				}
+			}
+		}
+		return false
 	}
 	
 	private func findMatch(firstMatch:Bool) -> Match?
