@@ -108,36 +108,33 @@ class ViewController: UIViewController {
 		let senderY = Int(location.y / tileSize)
 		if let selectX = selectX
 		{
-			if selectX == senderX && selectY == senderY
+			if (board.canSwap && board.swap(xFrom: selectX, yFrom: selectY, xTo: senderX, yTo: senderY))
+			{
+				//temporarily move the select pointer to the click location to properly disable the selection box
+				self.selectX = senderX
+				self.selectY = senderY
+				destroySelectionBox()
+				
+				//mark the animation as started
+				self.selectX = nil
+				self.animating = true
+				
+				//update moves
+				self.movesCounter.text = "\(self.board.moves)"
+				
+				//animate the swap
+				UIView.animateWithDuration(swapTime, animations:
+				{
+					self.updateTileRepresentations()
+				})
+				{ (completed) in
+					self.collapseMatches()
+				}
+			}
+			else
 			{
 				destroySelectionBox()
 				self.selectX = nil
-			}
-			else if (board.canSwap)
-			{
-				if (board.swap(xFrom: selectX, yFrom: selectY, xTo: senderX, yTo: senderY))
-				{
-					//temporarily move the select pointer to the click location to properly disable the selection box
-					self.selectX = senderX
-					self.selectY = senderY
-					destroySelectionBox()
-					
-					//mark the animation as started
-					self.selectX = nil
-					self.animating = true
-					
-					//update moves
-					self.movesCounter.text = "\(self.board.moves)"
-					
-					//animate the swap
-					UIView.animateWithDuration(swapTime, animations:
-					{
-						self.updateTileRepresentations()
-					})
-					{ (completed) in
-						self.collapseMatches()
-					}
-				}
 			}
 		}
 		else if let tileAt = board.tileAt(x: senderX, y: senderY)
