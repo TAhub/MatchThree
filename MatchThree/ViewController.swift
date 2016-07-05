@@ -216,7 +216,13 @@ class ViewController: UIViewController {
 				self.tileRepresentations.removeAll()
 				
 				//make a new board, and add the tles from it
+				let oldBoard = self.board
 				self.board = GameBoard(size: self.board.size, generationMethod: .Random)
+				
+				//save the old board's score
+				self.board.score = oldBoard.score
+				self.board.moves = oldBoard.moves
+				
 				for y in 0..<self.board.size
 				{
 					for x in 0..<self.board.size

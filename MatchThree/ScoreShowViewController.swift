@@ -8,7 +8,7 @@
 
 import UIKit
 
-let returnAfter:NSTimeInterval = 4
+let returnAfter:NSTimeInterval = 2.5
 
 class ScoreShowViewController: UIViewController {
 
@@ -24,7 +24,7 @@ class ScoreShowViewController: UIViewController {
 		
 		returnTimer = NSTimer.scheduledTimerWithTimeInterval(returnAfter, target: self, selector: #selector(returnToRoot), userInfo: nil, repeats: false)
 		
-		//TODO: register score
+		GameKitHelper.sharedInstance.reportScore(score)
 		
 	}
 	
