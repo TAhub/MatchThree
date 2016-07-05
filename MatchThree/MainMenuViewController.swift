@@ -15,10 +15,10 @@ class MainMenuViewController: UIViewController, GKGameCenterControllerDelegate {
 	@IBOutlet weak var scoreButton: UIButton!
 	@IBOutlet weak var achievementButton: UIButton!
 	
-	
-	
     override func viewDidLoad() {
         super.viewDidLoad()
+		
+		SoundHelper.sharedInstance.playMusic()
 		
 		startButton.hidden = true
 		startButton.alpha = 0

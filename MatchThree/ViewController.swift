@@ -11,6 +11,7 @@ import UIKit
 let swapTime = 0.25
 let dropTimePerLevel = 0.1
 let zapTime = 0.35
+let fadeTime = 1.5
 let playTime = 90
 let popupTime = 2.85
 let popupHeight:CGFloat = 100
@@ -47,6 +48,8 @@ class ViewController: UIViewController {
 				rep.alpha = 0
 			}
 		}
+		
+		SoundHelper.sharedInstance.playSound(.Shine)
 		
 		secondsLeft += 1
 		timerTick()
@@ -148,6 +151,8 @@ class ViewController: UIViewController {
 	
 	private func makeSelectionBox()
 	{
+		SoundHelper.sharedInstance.playSound(.Select)
+		
 		let rep = getViewForTile(x: selectX!, y: selectY)
 		
 		let selectionBox = UIView(frame: CGRectMake(0, 0, tileSize, tileSize))
@@ -157,6 +162,8 @@ class ViewController: UIViewController {
 	
 	private func destroySelectionBox()
 	{
+		SoundHelper.sharedInstance.playSound(.Select)
+		
 		let rep = getViewForTile(x: selectX!, y: selectY)
 		for subview in rep.subviews
 		{
@@ -234,6 +241,8 @@ class ViewController: UIViewController {
 				})
 				{ (completed) in
 					self.collapseMatches()
+					
+					SoundHelper.sharedInstance.playSound(.Select)
 				}
 			}
 		}
@@ -253,6 +262,8 @@ class ViewController: UIViewController {
 					subview.removeFromSuperview()
 				}
 				self.tileRepresentations.removeAll()
+				
+				SoundHelper.sharedInstance.playSound(.Shine)
 				
 				//make a new board, and add the tles from it
 				let oldBoard = self.board
@@ -285,7 +296,7 @@ class ViewController: UIViewController {
 	
 	private func fadeAllTiles(toAlpha:CGFloat, completion:()->())
 	{
-		UIView.animateWithDuration(zapTime, animations:
+		UIView.animateWithDuration(fadeTime, animations:
 		{
 			for subview in self.gameView.subviews
 			{
@@ -299,6 +310,8 @@ class ViewController: UIViewController {
 	
 	private func gameOver()
 	{
+		SoundHelper.sharedInstance.playSound(.Shine)
+		
 		if let _ = selectX
 		{
 			destroySelectionBox()
@@ -433,13 +446,6 @@ class ViewController: UIViewController {
 		case .Counterclockwise: tileView.image = UIImage(named: "refresh-two-counterclockwise-circular-arrows-interface-symbol.png")
 		default: tileView.image = nil
 		}
-		
-		
-		//TODO: icon credits
-		//god why does flaticon not generate this as a list or something
-		// Gregor Cresnar
-		// Freepik
-		// Linh Pham
 	}
 	
 	private func getViewForTile(x x:Int, y: Int) -> UIImageView

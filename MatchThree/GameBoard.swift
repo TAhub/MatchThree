@@ -182,6 +182,8 @@ class GameBoard
 		//raise score based on the match size
 		score += match.points
 		
+		var soundEffect:SoundIDs = .Match
+		
 		//convert all of the tiles in the match into empty, tallying special bonuses as you go
 		var rotate = 0
 		for x in match.x..<match.x+match.width
@@ -192,6 +194,11 @@ class GameBoard
 				if tile.property == .Junky
 				{
 					GameKitHelper.sharedInstance.reportAchievement(.Junk, newI: 1, target: 40, checkOld: true)
+					
+					if soundEffect == .Match
+					{
+						soundEffect = .Junk
+					}
 					
 					//junky tiles are turned into black tiles, instead of going away and leaving air
 					board[toI(x: x, y: y)] = GameTile(color: .Black, property: .None, identifier: tile.identifier)
@@ -205,7 +212,7 @@ class GameBoard
 				{
 				case .Clockwise: rotate += 1; GameKitHelper.sharedInstance.reportAchievement(.Rotate, newI: 1, target: 40, checkOld: true)
 				case .Counterclockwise: rotate -= 1; GameKitHelper.sharedInstance.reportAchievement(.Rotate, newI: 1, target: 40, checkOld: true)
-				case .Treasure: score += treasureScoreBonus; GameKitHelper.sharedInstance.reportAchievement(.Treasure, newI: 1, target: 40, checkOld: true)
+				case .Treasure: score += treasureScoreBonus; GameKitHelper.sharedInstance.reportAchievement(.Treasure, newI: 1, target: 40, checkOld: true); soundEffect = .Treasure
 				default: break
 				}
 			}
@@ -226,6 +233,13 @@ class GameBoard
 				rotateCounterclockwise()
 			}
 		}
+
+		if rotate != 0
+		{
+			soundEffect = .Rotate
+		}
+		
+		SoundHelper.sharedInstance.playSound(soundEffect)
 	
 		//make all existing tiles fall down
 		for x in match.x..<match.x+match.width

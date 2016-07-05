@@ -9,6 +9,8 @@
 import UIKit
 
 let returnAfter:NSTimeInterval = 2.5
+let yayPoint = 25
+let clapPoint = 100
 
 class ScoreShowViewController: UIViewController {
 
@@ -25,6 +27,8 @@ class ScoreShowViewController: UIViewController {
 		returnTimer = NSTimer.scheduledTimerWithTimeInterval(returnAfter, target: self, selector: #selector(returnToRoot), userInfo: nil, repeats: false)
 		
 		GameKitHelper.sharedInstance.reportScore(score)
+		
+		SoundHelper.sharedInstance.playSound(score >= clapPoint ? SoundIDs.Clap : (score >= yayPoint ? SoundIDs.Yay : SoundIDs.Boo))
 		
 		if score == 0
 		{

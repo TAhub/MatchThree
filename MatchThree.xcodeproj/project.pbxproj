@@ -10,6 +10,17 @@
 		E48A85331D2C2EB900338B2F /* GameKitHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E48A85321D2C2EB900338B2F /* GameKitHelper.swift */; };
 		E48A85351D2C30C600338B2F /* MainMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E48A85341D2C30C600338B2F /* MainMenuViewController.swift */; };
 		E48A85371D2C386300338B2F /* ScoreShowViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E48A85361D2C386300338B2F /* ScoreShowViewController.swift */; };
+		E48A853A1D2C66CD00338B2F /* Bushwick Tarantella Loop.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E48A85391D2C66CD00338B2F /* Bushwick Tarantella Loop.mp3 */; };
+		E48A853C1D2C694000338B2F /* SoundHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E48A853B1D2C694000338B2F /* SoundHelper.swift */; };
+		E48A853E1D2C6C5300338B2F /* 201159__kiddpark__cash-register.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E48A853D1D2C6C5300338B2F /* 201159__kiddpark__cash-register.mp3 */; };
+		E48A85401D2C6CF800338B2F /* 232137_yottasounds_rock-falling-010.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E48A853F1D2C6CF800338B2F /* 232137_yottasounds_rock-falling-010.mp3 */; };
+		E48A85421D2C6E3900338B2F /* 50557_broumbroum_sf3-sfx-menu-back.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E48A85411D2C6E3900338B2F /* 50557_broumbroum_sf3-sfx-menu-back.mp3 */; };
+		E48A85441D2C6FD200338B2F /* 176146_swagmuffinplus_sliding-doors.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E48A85431D2C6FD200338B2F /* 176146_swagmuffinplus_sliding-doors.mp3 */; };
+		E48A85461D2C709400338B2F /* 252808_xtrgamr_yay.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E48A85451D2C709400338B2F /* 252808_xtrgamr_yay.mp3 */; };
+		E48A85481D2C70B500338B2F /* 333393_jayfrosting_boo-5-only-a-couple-people.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E48A85471D2C70B500338B2F /* 333393_jayfrosting_boo-5-only-a-couple-people.mp3 */; };
+		E48A854A1D2C716900338B2F /* 256116_kwahmah-02_click.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E48A85491D2C716900338B2F /* 256116_kwahmah-02_click.mp3 */; };
+		E48A854C1D2C728D00338B2F /* 51746_erkanozan_clap.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E48A854B1D2C728D00338B2F /* 51746_erkanozan_clap.mp3 */; };
+		E48A854E1D2C73E100338B2F /* 169375_yoh_whoosh-crystal-reverse-yoh.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E48A854D1D2C73E000338B2F /* 169375_yoh_whoosh-crystal-reverse-yoh.mp3 */; };
 		E4F10CF61D2ACE4D005DA363 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F10CF51D2ACE4D005DA363 /* AppDelegate.swift */; };
 		E4F10CF81D2ACE4D005DA363 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F10CF71D2ACE4D005DA363 /* ViewController.swift */; };
 		E4F10CFB1D2ACE4D005DA363 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E4F10CF91D2ACE4D005DA363 /* Main.storyboard */; };
@@ -36,6 +47,17 @@
 		E48A85321D2C2EB900338B2F /* GameKitHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameKitHelper.swift; sourceTree = "<group>"; };
 		E48A85341D2C30C600338B2F /* MainMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainMenuViewController.swift; sourceTree = "<group>"; };
 		E48A85361D2C386300338B2F /* ScoreShowViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScoreShowViewController.swift; sourceTree = "<group>"; };
+		E48A85391D2C66CD00338B2F /* Bushwick Tarantella Loop.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Bushwick Tarantella Loop.mp3"; sourceTree = "<group>"; };
+		E48A853B1D2C694000338B2F /* SoundHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundHelper.swift; sourceTree = "<group>"; };
+		E48A853D1D2C6C5300338B2F /* 201159__kiddpark__cash-register.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "201159__kiddpark__cash-register.mp3"; sourceTree = "<group>"; };
+		E48A853F1D2C6CF800338B2F /* 232137_yottasounds_rock-falling-010.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "232137_yottasounds_rock-falling-010.mp3"; sourceTree = "<group>"; };
+		E48A85411D2C6E3900338B2F /* 50557_broumbroum_sf3-sfx-menu-back.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "50557_broumbroum_sf3-sfx-menu-back.mp3"; sourceTree = "<group>"; };
+		E48A85431D2C6FD200338B2F /* 176146_swagmuffinplus_sliding-doors.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "176146_swagmuffinplus_sliding-doors.mp3"; sourceTree = "<group>"; };
+		E48A85451D2C709400338B2F /* 252808_xtrgamr_yay.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = 252808_xtrgamr_yay.mp3; sourceTree = "<group>"; };
+		E48A85471D2C70B500338B2F /* 333393_jayfrosting_boo-5-only-a-couple-people.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "333393_jayfrosting_boo-5-only-a-couple-people.mp3"; sourceTree = "<group>"; };
+		E48A85491D2C716900338B2F /* 256116_kwahmah-02_click.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "256116_kwahmah-02_click.mp3"; sourceTree = "<group>"; };
+		E48A854B1D2C728D00338B2F /* 51746_erkanozan_clap.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = 51746_erkanozan_clap.mp3; sourceTree = "<group>"; };
+		E48A854D1D2C73E000338B2F /* 169375_yoh_whoosh-crystal-reverse-yoh.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "169375_yoh_whoosh-crystal-reverse-yoh.mp3"; sourceTree = "<group>"; };
 		E4F10CF21D2ACE4D005DA363 /* MatchThree.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MatchThree.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4F10CF51D2ACE4D005DA363 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E4F10CF71D2ACE4D005DA363 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -71,6 +93,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E48A85381D2C66BD00338B2F /* Sounds */ = {
+			isa = PBXGroup;
+			children = (
+				E48A854D1D2C73E000338B2F /* 169375_yoh_whoosh-crystal-reverse-yoh.mp3 */,
+				E48A854B1D2C728D00338B2F /* 51746_erkanozan_clap.mp3 */,
+				E48A85491D2C716900338B2F /* 256116_kwahmah-02_click.mp3 */,
+				E48A85451D2C709400338B2F /* 252808_xtrgamr_yay.mp3 */,
+				E48A85431D2C6FD200338B2F /* 176146_swagmuffinplus_sliding-doors.mp3 */,
+				E48A85471D2C70B500338B2F /* 333393_jayfrosting_boo-5-only-a-couple-people.mp3 */,
+				E48A85411D2C6E3900338B2F /* 50557_broumbroum_sf3-sfx-menu-back.mp3 */,
+				E48A853D1D2C6C5300338B2F /* 201159__kiddpark__cash-register.mp3 */,
+				E48A85391D2C66CD00338B2F /* Bushwick Tarantella Loop.mp3 */,
+				E48A853F1D2C6CF800338B2F /* 232137_yottasounds_rock-falling-010.mp3 */,
+			);
+			name = Sounds;
+			sourceTree = "<group>";
+		};
 		E4F10CE91D2ACE4D005DA363 = {
 			isa = PBXGroup;
 			children = (
@@ -117,6 +156,7 @@
 				E4F10D1F1D2AD12D005DA363 /* GameTile.swift */,
 				E4F10D1B1D2ACF74005DA363 /* GameBoard.swift */,
 				E48A85321D2C2EB900338B2F /* GameKitHelper.swift */,
+				E48A853B1D2C694000338B2F /* SoundHelper.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -144,6 +184,7 @@
 			children = (
 				E4F10CFE1D2ACE4D005DA363 /* LaunchScreen.storyboard */,
 				E4F10CFC1D2ACE4D005DA363 /* Assets.xcassets */,
+				E48A85381D2C66BD00338B2F /* Sounds */,
 				E4F10D011D2ACE4D005DA363 /* Info.plist */,
 				E4F10CF51D2ACE4D005DA363 /* AppDelegate.swift */,
 			);
@@ -237,9 +278,19 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E48A854C1D2C728D00338B2F /* 51746_erkanozan_clap.mp3 in Resources */,
+				E48A85421D2C6E3900338B2F /* 50557_broumbroum_sf3-sfx-menu-back.mp3 in Resources */,
+				E48A85461D2C709400338B2F /* 252808_xtrgamr_yay.mp3 in Resources */,
+				E48A853A1D2C66CD00338B2F /* Bushwick Tarantella Loop.mp3 in Resources */,
+				E48A853E1D2C6C5300338B2F /* 201159__kiddpark__cash-register.mp3 in Resources */,
 				E4F10D001D2ACE4D005DA363 /* LaunchScreen.storyboard in Resources */,
+				E48A854A1D2C716900338B2F /* 256116_kwahmah-02_click.mp3 in Resources */,
+				E48A85481D2C70B500338B2F /* 333393_jayfrosting_boo-5-only-a-couple-people.mp3 in Resources */,
 				E4F10CFD1D2ACE4D005DA363 /* Assets.xcassets in Resources */,
+				E48A854E1D2C73E100338B2F /* 169375_yoh_whoosh-crystal-reverse-yoh.mp3 in Resources */,
+				E48A85441D2C6FD200338B2F /* 176146_swagmuffinplus_sliding-doors.mp3 in Resources */,
 				E4F10CFB1D2ACE4D005DA363 /* Main.storyboard in Resources */,
+				E48A85401D2C6CF800338B2F /* 232137_yottasounds_rock-falling-010.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -262,6 +313,7 @@
 				E48A85371D2C386300338B2F /* ScoreShowViewController.swift in Sources */,
 				E48A85331D2C2EB900338B2F /* GameKitHelper.swift in Sources */,
 				E4F10D201D2AD12D005DA363 /* GameTile.swift in Sources */,
+				E48A853C1D2C694000338B2F /* SoundHelper.swift in Sources */,
 				E4F10D1C1D2ACF74005DA363 /* GameBoard.swift in Sources */,
 				E4F10CF61D2ACE4D005DA363 /* AppDelegate.swift in Sources */,
 			);
