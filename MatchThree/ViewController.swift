@@ -17,8 +17,8 @@ class ViewController: UIViewController {
 
 	@IBOutlet weak var gameView: UIView!
 	private var board:GameBoard = GameBoard(size: 6, generationMethod: GameBoardGenerationMethod.Random)
-	private var tileRepresentations = [Int:UIView]()
-	private var deadTileRepresentations = [UIView]()
+	private var tileRepresentations = [Int:UIImageView]()
+	private var deadTileRepresentations = [UIImageView]()
 	
 	@IBOutlet weak var scoreCounter: UILabel!
 	@IBOutlet weak var movesCounter: UILabel!
@@ -256,7 +256,7 @@ class ViewController: UIViewController {
 	private func findDeadTileRepresentations()
 	{
 		//find out what old reps are needed now
-		var newReps = [Int:UIView]()
+		var newReps = [Int:UIImageView]()
 		for y in 0..<board.size
 		{
 			for x in 0..<board.size
@@ -290,7 +290,7 @@ class ViewController: UIViewController {
 	private func generateNewTileRepresentationsInSky() -> CGFloat
 	{
 		//get all the new reps
-		var newReps = [UIView]()
+		var newReps = [UIImageView]()
 		for y in 0..<board.size
 		{
 			for x in 0..<board.size
@@ -341,7 +341,7 @@ class ViewController: UIViewController {
 		return gameView.frame.width / CGFloat(board.size)
 	}
 	
-	private func updateTileColor(tileView:UIView, tile:GameTile)
+	private func updateTileColor(tileView:UIImageView, tile:GameTile)
 	{
 		switch(tile.color)
 		{
@@ -354,10 +354,25 @@ class ViewController: UIViewController {
 		case .Black: tileView.backgroundColor = UIColor.blackColor()
 		}
 		
-		//TODO: also give the tile an icon if necessary (IE an image, like a rotate icon or w/e)
+		//also give the tile an icon if necessary (IE an image, like a rotate icon or w/e)
+		switch(tile.property)
+		{
+		case .Treasure: tileView.image = UIImage(named: "dollar-symbol.png")
+		case .Junky: tileView.image = UIImage(named: "garbage.png")
+		case .Clockwise: tileView.image = UIImage(named: "circle-of-two-clockwise-arrows-rotation.png")
+		case .Counterclockwise: tileView.image = UIImage(named: "refresh-two-counterclockwise-circular-arrows-interface-symbol.png")
+		default: tileView.image = nil
+		}
+		
+		
+		//TODO: icon credits
+		//god why does flaticon not generate this as a list or something
+		// Gregor Cresnar
+		// Freepik
+		// Linh Pham
 	}
 	
-	private func getViewForTile(x x:Int, y: Int) -> UIView
+	private func getViewForTile(x x:Int, y: Int) -> UIImageView
 	{
 		if let tile = board.tileAt(x: x, y: y)
 		{
@@ -368,7 +383,7 @@ class ViewController: UIViewController {
 			}
 			
 			
-			let tileView = UIView(frame: CGRectMake(CGFloat(x) * tileSize, CGFloat(y) * tileSize, tileSize, tileSize))
+			let tileView = UIImageView(frame: CGRectMake(CGFloat(x) * tileSize, CGFloat(y) * tileSize, tileSize, tileSize))
 			updateTileColor(tileView, tile: tile)
 			
 			//add the tile representation and register it with the representations dictionary
@@ -378,7 +393,7 @@ class ViewController: UIViewController {
 			return tileView
 		}
 		assertionFailure()
-		return UIView()
+		return UIImageView()
 	}
 }
 
