@@ -11,7 +11,7 @@ import UIKit
 let swapTime = 0.25
 let dropTimePerLevel = 0.1
 let zapTime = 0.35
-let playTime = 60
+let playTime = 90
 
 class ViewController: UIViewController {
 
@@ -30,30 +30,38 @@ class ViewController: UIViewController {
 	
 	private var selectX:Int?
 	private var selectY:Int!
-	private var animating = false
+	private var animating = true
 	
-	override func viewDidLoad()
-	{
-		super.viewDidLoad()
+	override func viewDidAppear(animated: Bool) {
+		super.viewDidAppear(animated)
 		
-		let recognizer = UITapGestureRecognizer()
-		recognizer.addTarget(self, action: #selector(selectTile))
-		gameView.addGestureRecognizer(recognizer)
+		//tiles start out faded-out, and fade in when you begin
 		
 		for y in 0..<board.size
 		{
 			for x in 0..<board.size
 			{
-				getViewForTile(x: x, y: y)
+				let rep = getViewForTile(x: x, y: y)
+				rep.alpha = 0
 			}
 		}
 		
-		clockTimer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: #selector(timerTick), userInfo: nil, repeats: true)
 		secondsLeft += 1
-		timerTick(clockTimer)
+		timerTick()
+		
+		fadeAllTiles(1)
+		{
+			self.animating = false
+			
+			let recognizer = UITapGestureRecognizer()
+			recognizer.addTarget(self, action: #selector(self.selectTile))
+			self.gameView.addGestureRecognizer(recognizer)
+			
+			self.clockTimer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: #selector(self.timerTick), userInfo: nil, repeats: true)
+		}
 	}
 	
-	func timerTick(sender:NSTimer)
+	func timerTick()
 	{
 		secondsLeft -= 1
 		
@@ -70,6 +78,16 @@ class ViewController: UIViewController {
 			}
 		}
 	}
+	
+	@IBAction func giveUp()
+	{
+		if secondsLeft > 0
+		{
+			secondsLeft = 1
+			timerTick()
+		}
+	}
+	
 	
 	func selectTile(sender:UITapGestureRecognizer)
 	{
@@ -249,7 +267,7 @@ class ViewController: UIViewController {
 			}
 			
 			//TODO: end the game
-			print("GAME OVER")
+			self.navigationController?.popViewControllerAnimated(true)
 		}
 	}
 	
