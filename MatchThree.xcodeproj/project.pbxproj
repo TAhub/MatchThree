@@ -16,6 +16,7 @@
 		E4F10D1C1D2ACF74005DA363 /* GameBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F10D1B1D2ACF74005DA363 /* GameBoard.swift */; };
 		E4F10D1E1D2AD0D9005DA363 /* GameTileTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F10D1D1D2AD0D9005DA363 /* GameTileTests.swift */; };
 		E4F10D201D2AD12D005DA363 /* GameTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F10D1F1D2AD12D005DA363 /* GameTile.swift */; };
+		E4F170091D2C22080010B170 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4F170081D2C22080010B170 /* GameKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,6 +43,7 @@
 		E4F10D1B1D2ACF74005DA363 /* GameBoard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameBoard.swift; sourceTree = "<group>"; };
 		E4F10D1D1D2AD0D9005DA363 /* GameTileTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameTileTests.swift; sourceTree = "<group>"; };
 		E4F10D1F1D2AD12D005DA363 /* GameTile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameTile.swift; sourceTree = "<group>"; };
+		E4F170081D2C22080010B170 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -49,6 +51,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E4F170091D2C22080010B170 /* GameKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -65,6 +68,7 @@
 		E4F10CE91D2ACE4D005DA363 = {
 			isa = PBXGroup;
 			children = (
+				E4F170081D2C22080010B170 /* GameKit.framework */,
 				E4F10CF41D2ACE4D005DA363 /* MatchThree */,
 				E4F10D091D2ACE4D005DA363 /* MatchThreeTests */,
 				E4F10CF31D2ACE4D005DA363 /* Products */,
@@ -187,6 +191,12 @@
 				TargetAttributes = {
 					E4F10CF11D2ACE4D005DA363 = {
 						CreatedOnToolsVersion = 7.3.1;
+						DevelopmentTeam = 532676UT4G;
+						SystemCapabilities = {
+							com.apple.GameCenter = {
+								enabled = 1;
+							};
+						};
 					};
 					E4F10D051D2ACE4D005DA363 = {
 						CreatedOnToolsVersion = 7.3.1;
@@ -435,6 +445,7 @@
 				E4F10D111D2ACE4D005DA363 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		E4F10D121D2ACE4D005DA363 /* Build configuration list for PBXNativeTarget "MatchThreeTests" */ = {
 			isa = XCConfigurationList;
@@ -443,6 +454,7 @@
 				E4F10D141D2ACE4D005DA363 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

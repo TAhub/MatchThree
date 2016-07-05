@@ -151,27 +151,44 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="GENERIC MATCH THREE" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HTp-nf-zvH">
-                                <rect key="frame" x="155" y="72" width="290" height="33"/>
-                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wvf-BS-Cit">
-                                <rect key="frame" x="283" y="285" width="34" height="30"/>
+                                <rect key="frame" x="283" y="470" width="34" height="30"/>
                                 <state key="normal" title="Start"/>
                                 <connections>
                                     <segue destination="BYZ-38-t0r" kind="show" id="XcW-NP-y5O"/>
                                 </connections>
                             </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon" translatesAutoresizingMaskIntoConstraints="NO" id="FqW-3B-jde">
+                                <rect key="frame" x="120" y="102" width="360" height="360"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="FqW-3B-jde" secondAttribute="height" id="JBl-fZ-z7L"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="&quot;EXCITING&quot; MATCH THREE GAME" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HTp-nf-zvH">
+                                <rect key="frame" x="173" y="28" width="255" height="66"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="FqW-3B-jde" firstAttribute="width" secondItem="9NF-tu-Hl4" secondAttribute="width" multiplier="0.6" id="CXD-go-YvS"/>
                             <constraint firstItem="Wvf-BS-Cit" firstAttribute="centerX" secondItem="9NF-tu-Hl4" secondAttribute="centerX" id="EYO-PH-yha"/>
                             <constraint firstItem="HTp-nf-zvH" firstAttribute="top" secondItem="Xf8-6K-Z28" secondAttribute="bottom" constant="8" symbolic="YES" id="GOa-HU-FHY"/>
+                            <constraint firstItem="FqW-3B-jde" firstAttribute="top" secondItem="HTp-nf-zvH" secondAttribute="bottom" constant="8" symbolic="YES" id="RKH-I0-wMH"/>
+                            <constraint firstItem="Wvf-BS-Cit" firstAttribute="top" secondItem="FqW-3B-jde" secondAttribute="bottom" constant="8" symbolic="YES" id="aBG-oa-arO"/>
                             <constraint firstItem="Wvf-BS-Cit" firstAttribute="centerY" secondItem="9NF-tu-Hl4" secondAttribute="centerY" id="cB6-oy-Bkl"/>
+                            <constraint firstItem="FqW-3B-jde" firstAttribute="centerY" secondItem="9NF-tu-Hl4" secondAttribute="centerY" id="iuA-sR-yDh"/>
                             <constraint firstItem="HTp-nf-zvH" firstAttribute="centerX" secondItem="9NF-tu-Hl4" secondAttribute="centerX" id="oFf-rl-loK"/>
+                            <constraint firstItem="FqW-3B-jde" firstAttribute="centerX" secondItem="9NF-tu-Hl4" secondAttribute="centerX" id="orY-b3-Liy"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="iuA-sR-yDh"/>
+                                <exclude reference="cB6-oy-Bkl"/>
+                            </mask>
+                        </variation>
                     </view>
                     <navigationItem key="navigationItem" id="Cin-oL-Bdr"/>
                 </viewController>
@@ -198,4 +215,7 @@
             <point key="canvasLocation" x="151" y="246"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="icon" width="1024" height="1024"/>
+    </resources>
 </document>
