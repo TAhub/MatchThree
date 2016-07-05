@@ -26,6 +26,7 @@ enum GameTileProperty
 	case Counterclockwise
 	case Empty
 	case Junky
+	case Treasure
 }
 
 struct GameTile

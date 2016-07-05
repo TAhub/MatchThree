@@ -11,7 +11,10 @@ import Foundation
 //MARK: constants
 let minMatchSize = 3
 let startGenMatchFixes = 30
-let junkyChance:UInt32 = 6
+let junkyChance:UInt32 = 8
+let rotationChance:UInt32 = 6
+let treasureChance:UInt32 = 8
+let treasureScoreBonus = 5
 
 //MARK: match definition
 struct Match
@@ -178,6 +181,7 @@ class GameBoard
 		score += match.points
 		
 		//convert all of the tiles in the match into empty, tallying special bonuses as you go
+		var rotate = 0
 		for x in match.x..<match.x+match.width
 		{
 			for y in match.y..<match.y+match.height
@@ -192,9 +196,33 @@ class GameBoard
 				{
 					board[toI(x: x, y: y)] = GameTile(color: .Black, property: .Empty)
 				}
+				
+				switch tile.property
+				{
+				case .Clockwise: rotate += 1
+				case .Counterclockwise: rotate -= 1
+				case .Treasure: score += treasureScoreBonus
+				default: break
+				}
 			}
 		}
 		
+		//TODO: instead of rotating on the spot, make a rotate flag so they can happen one at a time
+		if rotate > 0
+		{
+			for _ in 0..<rotate
+			{
+				rotateClockwise()
+			}
+		}
+		else if rotate < 0
+		{
+			for _ in 0..<(-rotate)
+			{
+				rotateCounterclockwise()
+			}
+		}
+	
 		//make all existing tiles fall down
 		for x in match.x..<match.x+match.width
 		{
@@ -304,6 +332,14 @@ class GameBoard
 					if arc4random_uniform(100) < junkyChance
 					{
 						property = .Junky
+					}
+					else if arc4random_uniform(100) < rotationChance
+					{
+						property = (arc4random_uniform(2) == 1 ? .Clockwise : .Counterclockwise)
+					}
+					else if arc4random_uniform(100) < treasureChance
+					{
+						property = .Treasure
 					}
 				}
 				
