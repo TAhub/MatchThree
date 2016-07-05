@@ -8,6 +8,15 @@
 
 import GameKit
 
+enum AchievementIDs:String
+{
+	case LotsaPoints = "M3LotsaPoints"
+	case Junk = "M3Junk"
+	case Rotate = "M3Rotate"
+	case Treasure = "M3Treasure"
+	case Lazy = "M3Lazy"
+}
+
 class GameKitHelper
 {
 	static let sharedInstance = GameKitHelper()
@@ -55,6 +64,40 @@ class GameKitHelper
 			}
 			
 			completion()
+		}
+	}
+	
+	func resetAchievements()
+	{
+		GKAchievement.resetAchievementsWithCompletionHandler()
+		{ (error) in
+			if let error = error
+			{
+				print("GameKit achievement reset error: \(error.userInfo.description)")
+			}
+		}
+	}
+	
+	func reportAchievement(identifier:AchievementIDs, newI:Int, target:Int, checkOld:Bool)
+	{
+		var i = newI
+		if checkOld
+		{
+			i += NSUserDefaults.standardUserDefaults().integerForKey(identifier.rawValue) ?? 0
+			NSUserDefaults.standardUserDefaults().setInteger(i, forKey: identifier.rawValue)
+		}
+		
+		let ach = GKAchievement(identifier: identifier.rawValue)
+		ach.percentComplete = 100 * Double(i) / Double(target)
+		
+		print("Achievement \(identifier.rawValue) raised to \(ach.percentComplete)%")
+		
+		GKAchievement.reportAchievements([ach])
+		{ (error) in
+			if let error = error
+			{
+				print("GameKit achievement error: \(error.userInfo.description)")
+			}
 		}
 	}
 	

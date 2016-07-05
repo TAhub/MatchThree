@@ -20,12 +20,20 @@ class ScoreShowViewController: UIViewController {
 	override func viewWillAppear(animated: Bool) {
 		super.viewWillAppear(animated)
 		
-		scoreLabel.text = "You got \(score) points!"
+		scoreLabel.text = "You got \(score > 0 ? "\(score)" : "no") points!"
 		
 		returnTimer = NSTimer.scheduledTimerWithTimeInterval(returnAfter, target: self, selector: #selector(returnToRoot), userInfo: nil, repeats: false)
 		
 		GameKitHelper.sharedInstance.reportScore(score)
 		
+		if score == 0
+		{
+			GameKitHelper.sharedInstance.reportAchievement(.Lazy, newI: 100, target: 1, checkOld: false)
+		}
+		else
+		{
+			GameKitHelper.sharedInstance.reportAchievement(.LotsaPoints, newI: score, target: 120, checkOld: false)
+		}
 	}
 	
 	func returnToRoot()

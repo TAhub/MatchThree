@@ -191,6 +191,8 @@ class GameBoard
 				let tile = board[toI(x: x, y: y)]
 				if tile.property == .Junky
 				{
+					GameKitHelper.sharedInstance.reportAchievement(.Junk, newI: 1, target: 40, checkOld: true)
+					
 					//junky tiles are turned into black tiles, instead of going away and leaving air
 					board[toI(x: x, y: y)] = GameTile(color: .Black, property: .None, identifier: tile.identifier)
 				}
@@ -201,9 +203,9 @@ class GameBoard
 				
 				switch tile.property
 				{
-				case .Clockwise: rotate += 1
-				case .Counterclockwise: rotate -= 1
-				case .Treasure: score += treasureScoreBonus
+				case .Clockwise: rotate += 1; GameKitHelper.sharedInstance.reportAchievement(.Rotate, newI: 1, target: 40, checkOld: true)
+				case .Counterclockwise: rotate -= 1; GameKitHelper.sharedInstance.reportAchievement(.Rotate, newI: 1, target: 40, checkOld: true)
+				case .Treasure: score += treasureScoreBonus; GameKitHelper.sharedInstance.reportAchievement(.Treasure, newI: 1, target: 40, checkOld: true)
 				default: break
 				}
 			}

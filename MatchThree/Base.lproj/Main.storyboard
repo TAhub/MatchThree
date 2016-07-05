@@ -187,6 +187,13 @@
                                     <action selector="scoreButtonPressed" destination="m1Y-hn-T1j" eventType="touchUpInside" id="RCc-sg-VHY"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8aM-Kb-WXj">
+                                <rect key="frame" x="252" y="546" width="97" height="30"/>
+                                <state key="normal" title="Achievements"/>
+                                <connections>
+                                    <action selector="achivementButtonPressed" destination="m1Y-hn-T1j" eventType="touchUpInside" id="nyz-3y-NPg"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -199,6 +206,8 @@
                             <constraint firstItem="Wvf-BS-Cit" firstAttribute="centerY" secondItem="9NF-tu-Hl4" secondAttribute="centerY" id="cB6-oy-Bkl"/>
                             <constraint firstItem="ce0-q2-Wls" firstAttribute="centerX" secondItem="9NF-tu-Hl4" secondAttribute="centerX" id="hTM-0R-MI9"/>
                             <constraint firstItem="FqW-3B-jde" firstAttribute="centerY" secondItem="9NF-tu-Hl4" secondAttribute="centerY" id="iuA-sR-yDh"/>
+                            <constraint firstItem="8aM-Kb-WXj" firstAttribute="centerX" secondItem="9NF-tu-Hl4" secondAttribute="centerX" id="lE8-ez-t80"/>
+                            <constraint firstItem="8aM-Kb-WXj" firstAttribute="top" secondItem="ce0-q2-Wls" secondAttribute="bottom" constant="8" symbolic="YES" id="m2B-lf-IBf"/>
                             <constraint firstItem="HTp-nf-zvH" firstAttribute="centerX" secondItem="9NF-tu-Hl4" secondAttribute="centerX" id="oFf-rl-loK"/>
                             <constraint firstItem="FqW-3B-jde" firstAttribute="centerX" secondItem="9NF-tu-Hl4" secondAttribute="centerX" id="orY-b3-Liy"/>
                         </constraints>
@@ -211,6 +220,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="Cin-oL-Bdr"/>
                     <connections>
+                        <outlet property="achievementButton" destination="8aM-Kb-WXj" id="tQc-zs-MS9"/>
                         <outlet property="scoreButton" destination="ce0-q2-Wls" id="VEG-LO-Oh2"/>
                         <outlet property="startButton" destination="Wvf-BS-Cit" id="yy1-F0-TKr"/>
                     </connections>

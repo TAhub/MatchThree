@@ -311,14 +311,7 @@ class ViewController: UIViewController {
 				subview.removeFromSuperview()
 			}
 			
-			if self.board.score > 0
-			{
-				self.performSegueWithIdentifier("showScore", sender: self)
-			}
-			else
-			{
-				self.navigationController?.popViewControllerAnimated(true)
-			}
+			self.performSegueWithIdentifier("showScore", sender: self)
 		}
 	}
 	
