@@ -26,7 +26,9 @@ struct Match
 	
 	var points:Int
 	{
-		return width + height - 1
+		//match points raise by 2 for every tile over 3
+		let size = width + height - 1
+		return (size <= 3 ? size : 3 + (size - 3) * 2)
 	}
 }
 

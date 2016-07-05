@@ -12,6 +12,8 @@ let swapTime = 0.25
 let dropTimePerLevel = 0.1
 let zapTime = 0.35
 let playTime = 90
+let popupTime = 2.85
+let popupHeight:CGFloat = 100
 
 class ViewController: UIViewController {
 
@@ -162,12 +164,49 @@ class ViewController: UIViewController {
 		}
 	}
 	
+	private func makeScorePopup(score:Int, onMatch:Match)
+	{
+		//get the center of the match
+		var matchCenterX = CGFloat(onMatch.x) + CGFloat(onMatch.width) / 2
+		var matchCenterY = CGFloat(onMatch.y) + CGFloat(onMatch.height) / 2
+		matchCenterX *= tileSize
+		matchCenterY *= tileSize
+		matchCenterX += gameView.frame.origin.x
+		matchCenterY += gameView.frame.origin.y
+		
+		//generate an attributes list to give the string color borders
+		let attributes = [NSStrokeColorAttributeName : UIColor.blackColor(),
+		                  NSForegroundColorAttributeName : UIColor.whiteColor(),
+		                  NSStrokeWidthAttributeName : -1.0,
+		                  NSFontAttributeName : UIFont.systemFontOfSize(35)]
+		
+		let popup = UILabel()
+		popup.attributedText = NSAttributedString(string: "+\(score)", attributes: attributes)
+		popup.sizeToFit()
+		popup.center = CGPoint(x: matchCenterX, y: matchCenterY)
+		self.view.addSubview(popup)
+		
+		UIView.animateWithDuration(popupTime, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations:
+		{
+			popup.center = CGPoint(x: matchCenterX, y: matchCenterY - popupHeight)
+		})
+		{ (completed) in
+			popup.removeFromSuperview()
+		}
+	}
+	
 	private func collapseMatches()
 	{
 		if let match = self.board.findMatch()
 		{
+			//save old score, so you can tell what the score gain is
+			let oldScore = self.board.score
+			
 			//collapse the match
 			self.board.collapseMatch(match)
+			
+			//make a score popup
+			makeScorePopup(self.board.score - oldScore, onMatch: match)
 			
 			//update score
 			self.scoreCounter.text = "\(self.board.score)"

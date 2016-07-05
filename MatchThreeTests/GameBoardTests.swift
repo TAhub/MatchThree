@@ -112,6 +112,13 @@ class GameBoardTests: XCTestCase {
 		XCTAssertFalse(gameBoard.matchExists)
 	}
 	
+	func testMatchPoints()
+	{
+		XCTAssertEqual(Match(x: 0, y: 0, width: 3, height: 1).points, 3)
+		XCTAssertEqual(Match(x: 0, y: 0, width: 4, height: 1).points, 5)
+		XCTAssertEqual(Match(x: 0, y: 0, width: 5, height: 1).points, 7)
+	}
+	
 //	func testNoSwapBlack() //I changed my mind; you should be allowed to swap black tiles
 //	{
 //		let comparisonBoard = [black, red, black,
